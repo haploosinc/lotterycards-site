@@ -100,12 +100,8 @@
       </div>
     </div>
     <div class="lc-float" style="display:flex;flex-direction:column;align-items:center;gap:16px;">
-      <div style="width:244px;background:#0A0D13;border-radius:42px;padding:9px;box-shadow:0 40px 70px -24px rgba(0,0,0,.6);flex:none;">
-        <div style="border-radius:34px;overflow:hidden;height:490px;background:#F3F6FA;">
-          <div style="width:402px;height:874px;transform:scale(0.562);transform-origin:top left;">
-            <dc-import name="App Screens" initial-screen="home" style="width:100%;height:100%" hint-size="402px,874px"></dc-import>
-          </div>
-        </div>
+      <div style="width:244px;height:694px;border-radius:24px;overflow:hidden;box-shadow:0 40px 70px -24px rgba(0,0,0,.6);flex:none;background:#0A1A30;">
+        <iframe src="https://haploosinc.github.io/lotterycards-mobile-app/" title="LotteryCards live demo" loading="lazy" style="width:442px;height:1261px;border:0;transform:scale(0.55);transform-origin:top left;"></iframe>
       </div>
       <div style="display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:#9DB0C9;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:7px 14px;">
         <span style="width:7px;height:7px;border-radius:50%;background:#5FD3A3;animation:lcpulse 2s ease-in-out infinite;flex:none;"></span>
@@ -575,7 +571,7 @@ class Component extends DCLogic {
       g('div', { style: { background: '#F3F6FA', borderRadius: 34, overflow: 'hidden', height: 548, display: 'flex', flexDirection: 'column' } },
         g('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '13px 20px 4px', fontSize: 12, fontWeight: 700, color: '#0B2545' } },
           g('span', null, '9:41'),
-          g('span', { style: { fontSize: 10, color: '#0B2545' } }, '\u25CF\u25CF\u25CF \u25CB')),
+          g('span', { style: { fontSize: 10, color: '#0B2545' } }, '●●● ○')),
         g('div', { style: { padding: '8px 16px 16px', display: 'flex', flexDirection: 'column', gap: 12 } },
           g('div', { style: { display: 'flex', alignItems: 'center', gap: 9 } },
             g('div', { style: { width: 30, height: 30, borderRadius: '50%', background: '#0B2545', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700 } }, 'A'),
@@ -604,7 +600,7 @@ class Component extends DCLogic {
                 g('span', { style: { fontSize: 10, fontWeight: 700, letterSpacing: '.1em' } }, 'STATE LOTTERY'))),
 
             g('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' } },
-              g('span', { style: { fontSize: 12.5, fontFamily: 'monospace', letterSpacing: '.12em' } }, '\u2022\u2022\u2022\u2022 4821'),
+              g('span', { style: { fontSize: 12.5, fontFamily: 'monospace', letterSpacing: '.12em' } }, '•••• 4821'),
               g('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 } },
                 g('svg', { viewBox: '0 0 36 22', style: { width: 38, height: 23 } },
                   g('circle', { cx: 13, cy: 11, r: 10, fill: '#EB001B' }),
@@ -615,9 +611,9 @@ class Component extends DCLogic {
             g('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 2 } },
               g('span', { style: { fontWeight: 700, color: '#0B2545' } }, 'Recent activity'),
               g('span', { style: { color: '#1E5FBF', fontWeight: 600 } }, 'View all')),
-            this.actRow('\u2605', '#FDF3D6', '#C9962C', 'MegaMillions', 'Instant win \u00b7 Today', '+$50.00', '#1F9D6F'),
-            this.actRow('L', '#EDF1F6', '#4A5A70', 'Lucky 7s \u2014 5-pack', 'Purchase \u00b7 Today', '\u2212$10.00', '#0B2545'),
-            this.actRow('\u2193', '#EDF1F6', '#4A5A70', 'ATM Withdrawal', 'To \u2022\u2022\u2022\u2022 4417 \u00b7 Jun 8', '\u2212$40.00', '#0B2545'))
+            this.actRow('★', '#FDF3D6', '#C9962C', 'MegaMillions', 'Instant win · Today', '+$50.00', '#1F9D6F'),
+            this.actRow('L', '#EDF1F6', '#4A5A70', 'Lucky 7s — 5-pack', 'Purchase · Today', '−$10.00', '#0B2545'),
+            this.actRow('↓', '#EDF1F6', '#4A5A70', 'ATM Withdrawal', 'To •••• 4417 · Jun 8', '−$40.00', '#0B2545'))
         )));
   }
 
@@ -654,11 +650,11 @@ class Component extends DCLogic {
       phoneHero: this.phone(),
       toggle: this.toggle(),
       journeyFlag: agency
-        ? 'The claim and the payout stop being the low points. The prize lands on a card in seconds \u2014 so the win stays a win, all the way to spend.'
-        : "It's your money. Get it now. Your prize lands on your card in seconds \u2014 no walking, no working around office hours, no waiting.",
+        ? 'The claim and the payout stop being the low points. The prize lands on a card in seconds — so the win stays a win, all the way to spend.'
+        : "It's your money. Get it now. Your prize lands on your card in seconds — no walking, no working around office hours, no waiting.",
       journeySub: agency
-        ? 'The experience breaks at the exact moment it should be strongest. Players buy, dream, and win \u2014 then hit paperwork, a cash-strapped till, or a check in the mail.'
-        : "You won \u2014 so why should you walk, work, and wait for your own money? A clerk without enough cash in the till, a lottery office across town that's only open while you're at work\u2026 none of that should get to ruin your moment. This is the best part. It should be yours the second you win.",
+        ? 'The experience breaks at the exact moment it should be strongest. Players buy, dream, and win — then hit paperwork, a cash-strapped till, or a check in the mail.'
+        : "You won — so why should you walk, work, and wait for your own money? A clerk without enough cash in the till, a lottery office across town that's only open while you're at work… none of that should get to ruin your moment. This is the best part. It should be yours the second you win.",
       heroEyebrow: agency ? 'For state lotteries' : 'For winners',
       heroTitle: agency ? 'Winning should feel like winning. For everyone.' : 'Win. Tap. Pay.',
       heroTitleSize: agency ? 50 : 62,
@@ -684,14 +680,14 @@ class Component extends DCLogic {
       toggleMenu: (e) => { e.stopPropagation(); this.setState(s => ({ menuOpen: !s.menuOpen })); },
       setWinnerView: (e) => { e.stopPropagation(); this.setState({ agencyView: false, menuOpen: false }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
       setAgencyView: (e) => { e.stopPropagation(); this.setState({ agencyView: true, menuOpen: false }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-      winnerMark: agency ? '' : '\u2713',
-      agencyMark: agency ? '\u2713' : '',
+      winnerMark: agency ? '' : '✓',
+      agencyMark: agency ? '✓' : '',
       navCtaLabel: agency ? 'Request a demo' : 'Winner Login',
       navCtaHref: agency ? 'connect.html' : 'https://winners.lotterycards.com/login',
       footLoginLabel: agency ? 'Agency Login' : 'Winner Login',
       footLoginHref: agency ? 'https://agency.lotterycards.com/login' : 'https://winners.lotterycards.com/login',
       finalEyebrow: agency ? 'Join the conversation' : 'Ready when you win',
-      finalTitle: agency ? "People aren't leaving cash. They're leaving friction." : 'Your win shouldn\u2019t have to wait.',
+      finalTitle: agency ? "People aren't leaving cash. They're leaving friction." : 'Your win shouldn’t have to wait.',
       finalSub: agency
         ? "Washington built the first lift. Tell us how you pay winners today, and we'll show you where LotteryCards fits."
         : 'Log in to see your balance, add your card to your wallet, and spend your winnings anywhere.',

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#FFFFFF;font-family:'Inter',sans-serif;color:#0B2545;-webkit-font-smoothing:antialiased;}
+  *{box-sizing:border-box;}
+  a{color:#1E5FBF;text-decoration:none;}
+  a:hover{color:#0B2545;}
+  .lc-in{max-width:1180px;margin:0 auto;padding:0 40px;}
+  .lc-cta{transition:transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;cursor:pointer;}
+  .lc-cta:hover{transform:translateY(-2px);}
+  .lc-link{transition:color .15s ease;cursor:pointer;}
+  .lc-card{transition:transform .2s ease, box-shadow .2s ease;}
+  .lc-card:hover{transform:translateY(-4px);}
+  @keyframes lcfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes lcshimmer{0%{transform:translateX(-90px) rotate(18deg)}55%,100%{transform:translateX(260px) rotate(18deg)}}
+  .lc-shimmer{animation:lcshimmer 3.6s cubic-bezier(.45,.05,.4,1) infinite;}
+  @keyframes lcholo{0%,100%{filter:hue-rotate(0deg);opacity:.22}50%{filter:hue-rotate(60deg);opacity:.34}}
+  @keyframes lcpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.72)}}
+  .lc-holo{animation:lcholo 7s ease-in-out infinite;}
+  .lc-float{animation:lcfloat 5.5s ease-in-out infinite;}
+  @keyframes revealUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  .reveal.in{animation:revealUp .7s cubic-bezier(.2,.7,.2,1) both;}
+  @media(max-width:900px){
+    .lc-in{padding:0 22px;}
+    .lc-hero-grid,.lc-2col,.lc-foot,.lc-3stat{grid-template-columns:1fr!important;}
+    .lc-4col{grid-template-columns:1fr 1fr!important;}
+    section:not(:first-of-type){padding:64px 0!important;}
+    h1{font-size:44px!important;}
+    h2{font-size:31px!important;}
+    .lc-navlinks{display:none!important;}
+    .lc-3stat>div{border-right:none!important;border-bottom:1px solid rgba(255,255,255,.09);padding:18px 8px!important;}
+    .lc-3stat>div:last-child{border-bottom:none!important;}
+    .lc-flag{flex-direction:column!important;align-items:flex-start!important;}
+    .lc-hero-grid{padding-top:36px!important;gap:44px!important;}
+  }
+  .lc-mob{display:none;}
+  @media(max-width:700px){.lc-desk{display:none!important;}.lc-mob{display:block!important;}}
+  @media(max-width:560px){
+    .lc-4col,.lc-pair{grid-template-columns:1fr!important;}
+    h1{font-size:38px!important;}
+    .lc-nav-demo{padding:9px 12px!important;font-size:12.5px!important;}
+    .lc-nav-login{padding:8px 12px!important;font-size:12.5px!important;}
+    .lc-nav-word{display:none!important;}
+  }
+</style>
+</helmet>
+
+<!-- ============ NAV + HERO ============ -->
+<section style="background:radial-gradient(130% 120% at 82% -10%, #14345B 0%, #0A1A30 55%, #071322 100%);color:#fff;">
+  <div style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,19,34,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.07);">
+    <div class="lc-in" style="display:flex;align-items:center;justify-content:space-between;padding-top:15px;padding-bottom:15px;">
+      <div onClick="{{ toggleMenu }}" data-nav-menu="1" style="display:flex;align-items:center;gap:11px;position:relative;cursor:pointer;">
+        {{ iconNav }}<span class="lc-nav-word" style="font-family:'Space Grotesk';font-weight:700;font-size:20px;letter-spacing:-.01em;color:#fff;">LotteryCards</span>
+        <svg viewBox="0 0 12 8" style="width:11px;height:7px;flex:none;"><path d="M1 1.5 L6 6.5 L11 1.5" fill="none" stroke="#9DB0C9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:50px;left:0;background:#0D2038;border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:6px;min-width:200px;box-shadow:0 18px 40px rgba(0,0,0,.45);display:flex;flex-direction:column;gap:2px;">
+            <div onClick="{{ setWinnerView }}" style="display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:14px;font-weight:600;color:#fff;padding:10px 13px;border-radius:8px;cursor:pointer;" style-hover="background:rgba(255,255,255,.08)">
+              <span style="display:flex;align-items:center;gap:10px;">
+                <svg viewBox="0 0 24 24" style="width:17px;height:17px;flex:none;"><circle cx="12" cy="8" r="4" fill="#9DB0C9"></circle><path d="M4 20 C4 15.6 7.6 13.5 12 13.5 C16.4 13.5 20 15.6 20 20 Z" fill="#9DB0C9"></path></svg>
+                <span>Winner</span>
+              </span><span style="color:#E9C766;font-weight:700;">{{ winnerMark }}</span>
+            </div>
+            <div onClick="{{ setAgencyView }}" style="display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:14px;font-weight:600;color:#fff;padding:10px 13px;border-radius:8px;cursor:pointer;" style-hover="background:rgba(255,255,255,.08)">
+              <span style="display:flex;align-items:center;gap:10px;">
+                <svg viewBox="0 0 24 24" style="width:17px;height:17px;flex:none;"><circle cx="7.5" cy="8.5" r="3.2" fill="#9DB0C9"></circle><circle cx="16.5" cy="8.5" r="3.2" fill="#9DB0C9"></circle><path d="M1.5 19.5 C1.5 15.9 4.2 14 7.5 14 C9.2 14 10.7 14.5 11.8 15.4 C10.7 16.4 10 17.7 10 19.5 Z" fill="#9DB0C9"></path><path d="M11.5 19.5 C11.5 15.9 13.6 14 16.5 14 C19.8 14 22.5 15.9 22.5 19.5 Z" fill="#9DB0C9"></path></svg>
+                <span>Agency</span>
+              </span><span style="color:#E9C766;font-weight:700;">{{ agencyMark }}</span>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <sc-if value="{{ agencyView }}" hint-placeholder-val="{{ false }}">
+          <a class="lc-cta lc-nav-login" href="https://agency.lotterycards.com/login" style="font-size:14px;font-weight:600;color:#fff;padding:9px 17px;border:1px solid rgba(255,255,255,.24);border-radius:10px;">Agency Login</a>
+        </sc-if>
+        <a class="lc-cta lc-nav-demo" href="{{ navCtaHref }}" style="font-size:14px;font-weight:700;color:#3A2B08;background:#E9C766;padding:10px 19px;border-radius:10px;">{{ navCtaLabel }}</a>
+      </div>
+    </div>
+  </div>
+  <div style="height:72px;"></div>
+
+  <div class="lc-in lc-hero-grid" style="display:grid;grid-template-columns:1.1fr .9fr;gap:40px;padding-top:52px;padding-bottom:36px;align-items:center;">
+    <div class="reveal">
+      {{ toggle }}
+      <h1 style="font-family:'Space Grotesk';font-weight:700;font-size:{{ heroTitleSize }}px;line-height:1.02;letter-spacing:-.025em;margin:32px 0 22px;">{{ heroTitle }}</h1>
+      <p style="font-size:18px;line-height:1.6;color:#B8C6DB;margin:0 0 32px;max-width:46ch;">{{ heroSub }}</p>
+      <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
+        <a class="lc-cta" href="{{ heroCtaHref }}" style="font-size:16px;font-weight:700;color:#3A2B08;background:#E9C766;padding:15px 30px;border-radius:12px;box-shadow:0 12px 28px -8px rgba(201,150,44,.6);">{{ heroCta }}</a>
+        <a class="lc-link" href="{{ heroCta2Href }}" style="font-size:15px;font-weight:600;color:#7FC9F0;">{{ heroCta2 }} →</a>
+      </div>
+    </div>
+    <div class="lc-float" style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+      <div style="width:244px;background:#0A0D13;border-radius:42px;padding:9px;box-shadow:0 40px 70px -24px rgba(0,0,0,.6);flex:none;">
+        <div style="border-radius:34px;overflow:hidden;height:490px;background:#F3F6FA;">
+          <div style="width:402px;height:874px;transform:scale(0.562);transform-origin:top left;">
+            <dc-import name="App Screens" initial-screen="home" style="width:100%;height:100%" hint-size="402px,874px"></dc-import>
+          </div>
+        </div>
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:#9DB0C9;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:7px 14px;">
+        <span style="width:7px;height:7px;border-radius:50%;background:#5FD3A3;animation:lcpulse 2s ease-in-out infinite;flex:none;"></span>
+        Live demo — tap around
+      </div>
+    </div>
+  </div>
+
+  <div class="lc-in lc-3stat" style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.09);margin-top:20px;">
+    <div style="padding:26px 8px;padding-right:36px;border-right:1px solid rgba(255,255,255,.09);"><div style="font-family:'Space Grotesk';font-weight:700;font-size:30px;color:#fff;">Instant</div><div style="font-size:13px;color:#9DB0C9;margin-top:4px;">{{ stat1Sub }}</div></div>
+    <div style="padding:26px 36px;border-right:1px solid rgba(255,255,255,.09);"><div style="font-family:'Space Grotesk';font-weight:700;font-size:30px;color:#fff;">{{ stat2Title }}</div><div style="font-size:13px;color:#9DB0C9;margin-top:4px;">{{ stat2Sub }}</div></div>
+    <div style="padding:26px 36px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:30px;color:#fff;">Every wallet</div><div style="font-size:13px;color:#9DB0C9;margin-top:4px;">{{ stat3Sub }}</div></div>
+  </div>
+  <div style="height:44px;"></div>
+</section>
+
+<!-- ============ THE WINNING JOURNEY ============ -->
+<section style="background:#FFFFFF;padding:96px 0;">
+  <div class="lc-in">
+    <div class="reveal" style="text-align:center;max-width:70ch;margin:0 auto 56px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1E5FBF;margin-bottom:14px;">The winning journey</div>
+      <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;">Where the fun disappears.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#4A5A70;margin:0;">{{ journeySub }}</p>
+    </div>
+
+    <div class="reveal" style="margin-bottom:16px;">
+      <svg class="lc-desk" viewBox="0 0 1100 400" style="width:100%;height:auto;display:block;" role="img" aria-label="Emotional journey of a lottery win: excitement rises from buying to winning, crashes during claiming and getting paid, and only partly recovers at spending. With LotteryCards the high continues straight through.">
+        <defs>
+          <linearGradient id="jfun" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8FB3DC"></stop><stop offset="1" stop-color="#C9962C"></stop></linearGradient>
+          <linearGradient id="jcrash" gradientUnits="userSpaceOnUse" x1="520" y1="0" x2="720" y2="0"><stop offset="0" stop-color="#C9962C"></stop><stop offset="1" stop-color="#C4574F"></stop></linearGradient>
+          <linearGradient id="jrec" gradientUnits="userSpaceOnUse" x1="720" y1="0" x2="940" y2="0"><stop offset="0" stop-color="#C4574F"></stop><stop offset="1" stop-color="#C9962C"></stop></linearGradient>
+          <linearGradient id="jcrashM" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="270" y2="0"><stop offset="0" stop-color="#C9962C"></stop><stop offset="1" stop-color="#C4574F"></stop></linearGradient>
+          <linearGradient id="jrecM" gradientUnits="userSpaceOnUse" x1="270" y1="0" x2="360" y2="0"><stop offset="0" stop-color="#C4574F"></stop><stop offset="1" stop-color="#C9962C"></stop></linearGradient>
+        </defs>
+        <text x="24" y="76" font-family="Inter" font-size="20" font-weight="600" fill="#8A97A8">Feels great</text>
+        <text x="24" y="322" font-family="Inter" font-size="20" font-weight="600" fill="#8A97A8">Feels awful</text>
+        <line x1="24" y1="90" x2="1076" y2="90" stroke="#EDF1F6" stroke-width="1.5"></line>
+        <line x1="24" y1="200" x2="1076" y2="200" stroke="#EDF1F6" stroke-width="1.5"></line>
+        <line x1="24" y1="298" x2="1076" y2="298" stroke="#EDF1F6" stroke-width="1.5"></line>
+        <!-- fun rise: buy → dream → win -->
+        <path d="M120,225 C190,210 250,198 320,178 C390,155 450,125 520,80" fill="none" stroke="url(#jfun)" stroke-width="7" stroke-linecap="round"></path>
+        <!-- the crash: win → paid -->
+        <path d="M520,80 C580,140 650,245 720,300" fill="none" stroke="url(#jcrash)" stroke-width="7" stroke-linecap="round"></path>
+        <!-- the recovery: paid → spend (winnings are FUN to spend) -->
+        <path d="M720,300 C790,292 870,205 940,105" fill="none" stroke="url(#jrec)" stroke-width="7" stroke-linecap="round"></path>
+        <!-- with LotteryCards: the high holds -->
+        <path d="M520,80 C660,62 810,60 940,68" fill="none" stroke="#1F9D6F" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 14"></path>
+        <circle cx="120" cy="225" r="10" fill="#8FB3DC"></circle>
+        <circle cx="320" cy="178" r="10" fill="#6E9CCB"></circle>
+        <circle cx="520" cy="80" r="13" fill="#C9962C" stroke="#F0D488" stroke-width="4"></circle>
+        <circle cx="720" cy="300" r="10" fill="#C4574F"></circle>
+        <circle cx="940" cy="105" r="12" fill="#C9962C"></circle>
+        <circle cx="940" cy="68" r="11" fill="#1F9D6F"></circle>
+        <text x="988" y="44" text-anchor="end" font-family="Space Grotesk" font-size="23" font-weight="700" fill="#1F9D6F">With LotteryCards</text>
+        <text x="120" y="266" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Buy</text>
+        <text x="320" y="219" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Dream</text>
+        <text x="520" y="48" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#C9962C">Win</text>
+        <text x="720" y="332" text-anchor="middle" font-family="Space Grotesk" font-size="22" font-weight="700" fill="#C4574F">Walk. Work. Wait.</text>
+        <text x="720" y="356" text-anchor="middle" font-family="Inter" font-size="16" font-weight="600" fill="#C98D87">to get paid</text>
+        <text x="958" y="112" text-anchor="start" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Spend</text>
+      </svg>
+      <svg class="lc-mob" viewBox="0 0 400 310" style="width:100%;height:auto;" role="img" aria-label="Winning feels great until getting paid — weeks of waiting. With LotteryCards, paid in seconds.">
+        <defs>
+          <linearGradient id="jcrashM" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C9962C"></stop><stop offset="1" stop-color="#C4574F"></stop></linearGradient>
+          <linearGradient id="jrecM" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C4574F"></stop><stop offset="1" stop-color="#C9962C"></stop></linearGradient>
+        </defs>
+        <path d="M40,190 C75,175 110,130 150,70" fill="none" stroke="#C9962C" stroke-width="5" stroke-linecap="round"></path>
+        <path d="M150,70 C190,120 225,205 270,240" fill="none" stroke="url(#jcrashM)" stroke-width="5" stroke-linecap="round"></path>
+        <path d="M270,240 C305,232 335,180 360,120" fill="none" stroke="url(#jrecM)" stroke-width="5" stroke-linecap="round"></path>
+        <path d="M150,70 C220,56 300,56 356,60" fill="none" stroke="#1F9D6F" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="1.5 10"></path>
+        <circle cx="40" cy="190" r="6" fill="#8FB3DC"></circle>
+        <circle cx="150" cy="70" r="8" fill="#C9962C" stroke="#F0D488" stroke-width="3"></circle>
+        <circle cx="270" cy="240" r="6" fill="#C4574F"></circle>
+        <circle cx="360" cy="120" r="7" fill="#C9962C"></circle>
+        <circle cx="360" cy="60" r="7" fill="#1F9D6F"></circle>
+        <text x="40" y="218" text-anchor="middle" font-family="Inter" font-size="15" font-weight="700" fill="#0B2545">Buy</text>
+        <text x="150" y="48" text-anchor="middle" font-family="Inter" font-size="15" font-weight="700" fill="#C9962C">Win</text>
+        <text x="270" y="266" text-anchor="middle" font-family="Space Grotesk" font-size="15" font-weight="700" fill="#C4574F">Walk. Work. Wait.</text>
+        <text x="270" y="284" text-anchor="middle" font-family="Inter" font-size="12" font-weight="600" fill="#C98D87">to get paid</text>
+        <text x="372" y="100" text-anchor="end" font-family="Inter" font-size="15" font-weight="700" fill="#0B2545">Spend</text>
+        <text x="368" y="36" text-anchor="end" font-family="Space Grotesk" font-size="16" font-weight="700" fill="#1F9D6F">With LotteryCards</text>
+      </svg>
+    </div>
+
+    <div class="reveal lc-flag" style="display:flex;align-items:center;gap:16px;background:#0B2545;border-radius:16px;padding:22px 28px;color:#fff;margin-top:36px;">
+      <div style="display:flex;align-items:center;gap:10px;flex:none;"><svg viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z" fill="#5FD3A3"/></svg><span style="font-family:'Space Grotesk';font-weight:700;font-size:16px;color:#5FD3A3;">With LotteryCards</span></div>
+      <div style="font-size:15px;line-height:1.5;color:#DCE6F2;">{{ journeyFlag }}</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WINNER VIEW: YOUR CARD ============ -->
+<sc-if value="{{ winnerView }}" hint-placeholder-val="{{ false }}">
+<section id="yourcard" style="background:#F4F7FA;padding:96px 0;scroll-margin-top:92px;">
+  <div class="lc-in">
+    <div class="reveal" style="max-width:64ch;margin:0 0 52px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1E5FBF;margin-bottom:14px;">Your card</div>
+      <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;">Your money, the moment you win.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#4A5A70;margin:0;">No check in the mail, no waiting weeks. Your prize lands on a virtual card in seconds — and it works like money should.</p>
+    </div>
+    <div class="lc-4col" style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;">
+      <div class="reveal lc-card" style="background:#fff;border:1px solid #E6ECF3;border-radius:18px;padding:28px 24px;box-shadow:0 2px 14px rgba(11,37,69,.05);">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:19px;margin-bottom:8px;">Paid in seconds</div>
+        <p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">The moment your claim is approved, your winnings are on your card — before you leave the counter.</p>
+      </div>
+      <div class="reveal lc-card" style="background:#fff;border:1px solid #E6ECF3;border-radius:18px;padding:28px 24px;box-shadow:0 2px 14px rgba(11,37,69,.05);">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:19px;margin-bottom:8px;">Spend anywhere</div>
+        <p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">Tap to pay in any store, or shop anywhere online — anywhere debit cards work.</p>
+      </div>
+      <div class="reveal lc-card" style="background:#fff;border:1px solid #E6ECF3;border-radius:18px;padding:28px 24px;box-shadow:0 2px 14px rgba(11,37,69,.05);">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:19px;margin-bottom:8px;">Lives in your wallet</div>
+        <p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">Add it to Apple, Google, or Samsung Wallet — or link it to Venmo, Cash App, and PayPal.</p>
+      </div>
+      <div class="reveal lc-card" style="background:#fff;border:1px solid #E6ECF3;border-radius:18px;padding:28px 24px;box-shadow:0 2px 14px rgba(11,37,69,.05);">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:19px;margin-bottom:8px;">Safe &amp; protected</div>
+        <p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">Your money is FDIC-insured and backed by Mastercard — every standard consumer protection applies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WINNER VIEW: RELOADABLE ============ -->
+<section style="background:#fff;padding:96px 0;">
+  <div class="lc-in">
+    <div class="lc-2col" style="display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;">
+      <div class="reveal">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#C9962C;margin-bottom:14px;">One card, every win</div>
+        <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;color:#0B2545;">Set it up once. Reload it every time you win.</h2>
+        <p style="font-size:17px;line-height:1.6;color:#4A5A70;margin:0 0 22px;">Your card isn't a one-time payout — it's yours to keep. The first win sets it up; every win after that lands on the same card, in the same wallet, in seconds. No new card, no new setup, no new anything.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:15px;color:#0B2545;">
+          <div style="display:flex;align-items:center;gap:12px;"><span style="color:#C9962C;font-weight:700;">✦</span>Win again next week? It's already on your card.</div>
+          <div style="display:flex;align-items:center;gap:12px;"><span style="color:#C9962C;font-weight:700;">✦</span>Same card number, same wallet, same linked apps.</div>
+          <div style="display:flex;align-items:center;gap:12px;"><span style="color:#C9962C;font-weight:700;">✦</span>Every win adds to whatever balance you haven't spent.</div>
+        </div>
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#F4F7FA;border:1px solid #E6ECF3;border-radius:14px;padding:18px 22px;">
+          <div><div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8093AB;margin-bottom:4px;">First win — card created</div><div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;color:#0B2545;">Scratch ticket · $500</div></div>
+          <div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;color:#1F9D6F;">+$500</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#F4F7FA;border:1px solid #E6ECF3;border-radius:14px;padding:18px 22px;">
+          <div><div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8093AB;margin-bottom:4px;">Three weeks later — same card</div><div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;color:#0B2545;">Draw game · $120</div></div>
+          <div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;color:#1F9D6F;">+$120</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#F4F7FA;border:1px solid #E6ECF3;border-radius:14px;padding:18px 22px;">
+          <div><div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8093AB;margin-bottom:4px;">Two months later — same card</div><div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;color:#0B2545;">Scratch ticket · $1,000</div></div>
+          <div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;color:#1F9D6F;">+$1,000</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#0B2545;border-radius:14px;padding:18px 22px;color:#fff;">
+          <div style="font-size:13px;font-weight:600;color:#B8C6DB;">One card. Every win.</div>
+          <div style="font-family:'Space Grotesk';font-weight:700;font-size:20px;color:#E9C766;">Reloadable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ agencyView }}" hint-placeholder-val="{{ true }}">
+<!-- ============ THREE WAYS TO REDEEM ============ -->
+<section style="background:#F4F7FA;padding:96px 0;">
+  <div class="lc-in">
+    <div class="reveal" style="max-width:64ch;margin:0 0 52px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1E5FBF;margin-bottom:14px;">Every claim channel</div>
+      <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;">Three ways to redeem. One instant payout.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#4A5A70;margin:0;">Wherever a player claims — a lottery office, a retail counter, or online — LotteryCards creates the winnings in seconds. Same instant experience, every channel.</p>
+    </div>
+    <div class="lc-2col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
+      <div class="reveal lc-card" style="background:#fff;border:1px solid #E6ECF3;border-radius:18px;padding:30px 26px;box-shadow:0 2px 14px rgba(11,37,69,.05);">
+        <div style="width:52px;height:52px;border-radius:13px;background:#FBF3DC;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">{{ iconOffice }}</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:20px;margin-bottom:8px;">Lottery office</div>
+        <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1F9D6F;background:#E4F5EE;border-radius:20px;padding:4px 10px;display:inline-block;margin-bottom:14px;">In seconds</div>
+        <p style="font-size:14.5px;line-height:1.6;color:#4A5A70;margin:0;">We integrate with your central gaming system — nothing changes in how you process a claim. Staff simply select "virtual card" instead of "print check," and the winner walks out paid.</p>
+      </div>
+      <div class="reveal lc-card" style="background:#fff;border:1px solid #E6ECF3;border-radius:18px;padding:30px 26px;box-shadow:0 2px 14px rgba(11,37,69,.05);">
+        <div style="width:52px;height:52px;border-radius:13px;background:#FBF3DC;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">{{ iconRetail }}</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:20px;margin-bottom:8px;">Retailer</div>
+        <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1F9D6F;background:#E4F5EE;border-radius:20px;padding:4px 10px;display:inline-block;margin-bottom:14px;">In seconds</div>
+        <p style="font-size:14.5px;line-height:1.6;color:#4A5A70;margin:0;">The retailer prints an encrypted QR code on the receipt; the player scans it to claim their virtual card. No cash handling — just print a receipt.</p>
+      </div>
+      <div class="reveal lc-card" style="background:#fff;border:1px solid #E6ECF3;border-radius:18px;padding:30px 26px;box-shadow:0 2px 14px rgba(11,37,69,.05);">
+        <div style="width:52px;height:52px;border-radius:13px;background:#FBF3DC;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">{{ iconOnline }}</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:20px;margin-bottom:8px;">Online</div>
+        <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1F9D6F;background:#E4F5EE;border-radius:20px;padding:4px 10px;display:inline-block;margin-bottom:14px;">In seconds</div>
+        <p style="font-size:14.5px;line-height:1.6;color:#4A5A70;margin:0;">We can handle the online claim ourselves or integrate with your current app provider — winnings drop straight to a virtual card in the player's wallet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" style="background:#FFFFFF;padding:96px 0;scroll-margin-top:92px;">
+  <div class="lc-in">
+    <div class="reveal" style="max-width:64ch;margin:0 0 52px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1E5FBF;margin-bottom:14px;">How it works</div>
+      <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-.02em;margin:0;">Claim. Fund. Spend.</h2>
+    </div>
+    <div class="reveal lc-2col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
+      <div style="border-top:2px solid #0B2545;padding-top:20px;">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:15px;color:#C9962C;margin-bottom:12px;">01</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;margin-bottom:8px;">Claim</div>
+        <p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">Winners follow your current claim process, unchanged — LotteryCards is fully integrated behind it.</p>
+      </div>
+      <div style="border-top:2px solid #0B2545;padding-top:20px;">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:15px;color:#C9962C;margin-bottom:12px;">02</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;margin-bottom:8px;">Fund</div>
+        <p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">Funds move in seconds from your funding account to the winner's virtual card — ready to spend immediately.</p>
+      </div>
+      <div style="border-top:2px solid #0B2545;padding-top:20px;">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:15px;color:#C9962C;margin-bottom:12px;">03</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;margin-bottom:8px;">Spend</div>
+        <p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">It's a prepaid debit card: add it to Apple, Google, or Samsung Wallet, or link it to Venmo, Cash App, PayPal, and other payment apps — then tap to pay in store or spend anywhere online.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO WE SERVE ============ -->
+<section style="background:#0A1A30;color:#fff;padding:96px 0;">
+  <div class="lc-in">
+    <div class="reveal" style="max-width:64ch;margin:0 0 52px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E9C766;margin-bottom:14px;">Who we serve</div>
+      <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;">One platform. Everyone in the payout.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#9DB0C9;margin:0;">Whether you run a state lottery, build the technology behind it, or just won a prize — it works for you.</p>
+    </div>
+    <div class="lc-2col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
+      <div class="reveal lc-card" style="background:linear-gradient(180deg,#12294A,#0D2038);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:30px 26px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#E9C766;margin-bottom:12px;">For state lotteries</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:22px;margin-bottom:14px;">Lotteries</div>
+        <p style="font-size:14px;line-height:1.6;color:#B8C6DB;margin:0 0 18px;">Replace checks and cash with instant digital payouts — built around the workflows you already run.</p>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:#DCE6F2;">
+          <div>✦&nbsp;&nbsp;Pay winners in seconds</div><div>✦&nbsp;&nbsp;Lower check &amp; mailing costs</div><div>✦&nbsp;&nbsp;Clear audit records</div>
+        </div>
+        <a class="lc-link" href="connect.html" style="display:inline-block;margin-top:20px;font-size:14px;font-weight:600;color:#7FC9F0;">Explore →</a>
+      </div>
+      <div class="reveal lc-card" style="background:linear-gradient(180deg,#12294A,#0D2038);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:30px 26px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#E9C766;margin-bottom:12px;">For retail partners</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:22px;margin-bottom:14px;">Retailers</div>
+        <p style="font-size:14px;line-height:1.6;color:#B8C6DB;margin:0 0 18px;">Print an encrypted QR code on the receipt — the winner scans to claim. No cash handling, no new hardware.</p>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:#DCE6F2;">
+          <div>✦&nbsp;&nbsp;No cash on hand needed</div><div>✦&nbsp;&nbsp;QR claim printed on the receipt</div><div>✦&nbsp;&nbsp;Works with existing systems</div>
+        </div>
+        <a class="lc-link" href="connect.html" style="display:inline-block;margin-top:20px;font-size:14px;font-weight:600;color:#7FC9F0;">Explore →</a>
+      </div>
+      <div class="reveal lc-card" style="background:linear-gradient(180deg,#1B2E1F,#132817);border:1px solid rgba(95,211,163,.18);border-radius:18px;padding:30px 26px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5FD3A3;margin-bottom:12px;">For winners</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:22px;margin-bottom:14px;">Players</div>
+        <p style="font-size:14px;line-height:1.6;color:#BFE6D5;margin:0 0 18px;">Win and get paid — instantly. Your prize lands on a prepaid debit card that works in Apple, Google, and Samsung Wallet, and funds Venmo, Cash App, and PayPal.</p>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:#DCF2E6;">
+          <div>✦&nbsp;&nbsp;Money ready in seconds</div><div>✦&nbsp;&nbsp;Spend anywhere, anytime</div><div>✦&nbsp;&nbsp;No waiting for a check</div>
+        </div>
+        <a class="lc-link" href="https://winners.lotterycards.com/login" style="display:inline-block;margin-top:20px;font-size:14px;font-weight:600;color:#5FD3A3;">Winner Login →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY SWITCH ============ -->
+<section style="background:#FFFFFF;padding:96px 0;">
+  <div class="lc-in">
+    <div class="reveal" style="max-width:64ch;margin:0 0 20px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1E5FBF;margin-bottom:14px;">Why switch</div>
+      <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;">Not an ordinary card. Built for lottery's rules.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#4A5A70;margin:0;">Physical cards, generic fintech, and banking-as-usual were built for different problems. This was designed around how prizes actually get paid.</p>
+    </div>
+    <div class="reveal" style="display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 40px;">
+      <span style="font-size:13px;font-weight:600;color:#0B2545;background:#F0F3F7;border:1px solid #E1E7EE;border-radius:20px;padding:8px 16px;">Virtual only</span>
+      <span style="font-size:13px;font-weight:600;color:#0B2545;background:#F0F3F7;border:1px solid #E1E7EE;border-radius:20px;padding:8px 16px;">Instant</span>
+      <span style="font-size:13px;font-weight:600;color:#0B2545;background:#F0F3F7;border:1px solid #E1E7EE;border-radius:20px;padding:8px 16px;">Reloadable</span>
+      <span style="font-size:13px;font-weight:600;color:#0B2545;background:#F0F3F7;border:1px solid #E1E7EE;border-radius:20px;padding:8px 16px;">Built for lottery</span>
+      <span style="font-size:13px;font-weight:600;color:#0B2545;background:#F0F3F7;border:1px solid #E1E7EE;border-radius:20px;padding:8px 16px;">Works in every wallet</span>
+    </div>
+    <div class="reveal lc-4col" style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;">
+      <div><div style="font-family:'Space Grotesk';font-weight:700;font-size:19px;margin-bottom:8px;color:#0B2545;">Faster payouts</div><p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">Approved funds arrive in seconds — nothing to print, mail, or clear.</p></div>
+      <div><div style="font-family:'Space Grotesk';font-weight:700;font-size:19px;margin-bottom:8px;color:#0B2545;">Lower cost</div><p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">Cut printing, postage, and manual reconciliation from every disbursement.</p></div>
+      <div><div style="font-family:'Space Grotesk';font-weight:700;font-size:19px;margin-bottom:8px;color:#0B2545;">Plug-and-play APIs</div><p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">Partners connect once; approved payouts then flow into the winner experience.</p></div>
+      <div><div style="font-family:'Space Grotesk';font-weight:700;font-size:19px;margin-bottom:8px;color:#0B2545;">Security-first</div><p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">Identity checks, access controls, and records agencies can review.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE POWER OF DATA ============ -->
+<section style="background:#0A1A30;color:#fff;padding:96px 0;">
+  <div class="lc-in">
+    <div class="reveal" style="max-width:68ch;margin:0 0 44px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E9C766;margin-bottom:14px;">The power of data</div>
+      <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;">From guessing to knowing.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#9DB0C9;margin:0;">Most tickets are bought and redeemed at retail, in cash, by someone you'll never identify. Lotteries run billion-dollar product lines on surveys, focus groups, and aggregate terminal sales — while knowing almost nothing about the individual player. The payout is the one moment a winner identifies themselves. LotteryCards turns that moment into a relationship.</p>
+    </div>
+    <div class="lc-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:44px;">
+      <div class="reveal" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:28px 26px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#B4504A;margin-bottom:14px;">Today — blind at retail</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:14.5px;line-height:1.5;color:#B8C6DB;">
+          <div>— Anonymous cash purchases; the player is a mystery</div>
+          <div>— Surveys and panels stand in for real behavior</div>
+          <div>— Aggregate terminal sales, weeks after the fact</div>
+          <div>— Winners cash a check and disappear</div>
+        </div>
+      </div>
+      <div class="reveal" style="background:linear-gradient(180deg,#12294A,#0D2038);border:1px solid rgba(233,199,102,.28);border-radius:18px;padding:28px 26px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#E9C766;margin-bottom:14px;">With LotteryCards — a known winner</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:14.5px;line-height:1.5;color:#DCE6F2;">
+          <div>✦&nbsp;&nbsp;What they play, and what they're most committed to</div>
+          <div>✦&nbsp;&nbsp;When, where, and how winnings are spent</div>
+          <div>✦&nbsp;&nbsp;First-party, consented data — not third-party inference</div>
+          <div>✦&nbsp;&nbsp;A channel to reach the winner after the win</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal lc-4col" style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:40px;">
+      <div style="border-top:2px solid #E9C766;padding-top:18px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;margin-bottom:8px;">Design better games</div><p style="font-size:14px;line-height:1.6;color:#9DB0C9;margin:0;">See which games actually hold players — not which ones survey well — and shape the portfolio around real behavior.</p></div>
+      <div style="border-top:2px solid #E9C766;padding-top:18px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;margin-bottom:8px;">Sharpen retail</div><p style="font-size:14px;line-height:1.6;color:#9DB0C9;margin:0;">Understand where wins are claimed and spent to spot underperforming locations and place promotions where they work.</p></div>
+      <div style="border-top:2px solid #E9C766;padding-top:18px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;margin-bottom:8px;">Keep players engaged</div><p style="font-size:14px;line-height:1.6;color:#9DB0C9;margin:0;">Measure real engagement and drift instead of waiting for declining sales to tell you a segment already left.</p></div>
+      <div style="border-top:2px solid #E9C766;padding-top:18px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;margin-bottom:8px;">Play responsibly</div><p style="font-size:14px;line-height:1.6;color:#9DB0C9;margin:0;">Known players make responsible gaming real — spend visibility, limits, and direct outreach that anonymous retail can't offer.</p></div>
+    </div>
+    <div class="reveal lc-flag" style="display:flex;align-items:center;gap:16px;background:rgba(95,211,163,.08);border:1px solid rgba(95,211,163,.25);border-radius:16px;padding:22px 28px;">
+      <div style="display:flex;align-items:center;gap:10px;flex:none;"><svg viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M12 2 L21 6 V11 C21 16.5 17.2 20.8 12 22 C6.8 20.8 3 16.5 3 11 V6 Z" fill="#5FD3A3"></path></svg><span style="font-family:'Space Grotesk';font-weight:700;font-size:16px;color:#5FD3A3;">Privacy is the boundary</span></div>
+      <div style="font-size:15px;line-height:1.5;color:#DCE6F2;">Player data stays protected. We apply compliant models to surface aggregate insight — patterns, segments, trends — so lotteries learn and decide without individual data ever being exposed or sold.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE MARKET MOVED (STATS) ============ -->
+<section style="background:#FDF6E4;padding:96px 0;">
+  <div class="lc-in">
+    <div class="reveal" style="max-width:64ch;margin:0 0 52px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#C9962C;margin-bottom:14px;">Meet players where they are</div>
+      <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:42px;line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;">Money has gone mobile. Your winners already live there.</h2>
+      <p style="font-size:17px;line-height:1.6;color:#5A5033;margin:0;">Paying people how they want to be paid isn't a courtesy — it's the product. Every year, a paper check feels more foreign to the player holding it. The data isn't a trend line anymore; it's a done deal.</p>
+    </div>
+    <div class="reveal lc-4col" style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:48px;">
+      <div style="border-top:2px solid #C9962C;padding-top:18px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:44px;color:#0B2545;letter-spacing:-.02em;">14%</div><p style="font-size:13.5px;line-height:1.55;color:#5A5033;margin:6px 0 0;">of consumer payments are cash today — down from 31% in 2016</p></div>
+      <div style="border-top:2px solid #C9962C;padding-top:18px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:44px;color:#0B2545;letter-spacing:-.02em;">3%</div><p style="font-size:13.5px;line-height:1.55;color:#5A5033;margin:6px 0 0;">of consumer payments are checks — and falling every year</p></div>
+      <div style="border-top:2px solid #C9962C;padding-top:18px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:44px;color:#0B2545;letter-spacing:-.02em;">45%</div><p style="font-size:13.5px;line-height:1.55;color:#5A5033;margin:6px 0 0;">of all payments by adults 18–24 are made with a phone</p></div>
+      <div style="border-top:2px solid #C9962C;padding-top:18px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:44px;color:#0B2545;letter-spacing:-.02em;">50%</div><p style="font-size:13.5px;line-height:1.55;color:#5A5033;margin:6px 0 0;">of U.S. households already use PayPal, Venmo, or Cash App</p></div>
+    </div>
+    <div class="lc-2col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:36px;">
+      <div class="reveal" style="background:#fff;border:1px solid #EADFC2;border-radius:16px;padding:24px 22px;">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;margin-bottom:8px;color:#0B2545;">The friction of cash</div>
+        <p style="font-size:14px;line-height:1.6;color:#5A5033;margin:0;">Till limits cap what retail can pay. Armored transport, counting, and reconciliation make every cash dollar expensive to move — while mobile payment use has nearly tripled since 2018.</p>
+      </div>
+      <div class="reveal" style="background:#fff;border:1px solid #EADFC2;border-radius:16px;padding:24px 22px;">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;margin-bottom:8px;color:#0B2545;">The friction of checks</div>
+        <p style="font-size:14px;line-height:1.6;color:#5A5033;margin:0;">Print, mail, wait, deposit, clear — weeks of delay for an instrument younger winners may never have used. Check payments are declining in both number and value.</p>
+      </div>
+      <div class="reveal" style="background:#fff;border:1px solid #EADFC2;border-radius:16px;padding:24px 22px;">
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;margin-bottom:8px;color:#0B2545;">The friction of ACH</div>
+        <p style="font-size:14px;line-height:1.6;color:#5A5033;margin:0;">Collecting routing numbers at a claim counter is slow and error-prone, settlement takes days — and it excludes every winner without a bank account.</p>
+      </div>
+    </div>
+    <div class="reveal lc-flag" style="display:flex;align-items:center;gap:16px;background:#0B2545;border-radius:16px;padding:22px 28px;color:#fff;">
+      <div style="display:flex;align-items:center;gap:10px;flex:none;"><svg viewBox="0 0 24 24" style="width:20px;height:20px"><rect x="7" y="2" width="10" height="20" rx="2.5" fill="none" stroke="#E9C766" stroke-width="1.8"></rect><circle cx="12" cy="18.5" r="1.2" fill="#E9C766"></circle></svg><span style="font-family:'Space Grotesk';font-weight:700;font-size:16px;color:#E9C766;">The phone reaches everyone</span></div>
+      <div style="font-size:15px;line-height:1.5;color:#DCE6F2;">Nearly 9 in 10 U.S. households have a smartphone — including 72% of households with no bank account at all. A virtual prepaid card reaches the winners a check frustrates and ACH can't serve.</div>
+    </div>
+    <p style="font-size:11.5px;color:#9A8C63;margin:28px 0 0;">Sources: Federal Reserve Diary of Consumer Payment Choice (2025) · Federal Reserve Payments Study (2025) · FDIC National Survey of Unbanked and Underbanked Households (2023).</p>
+  </div>
+</section>
+
+<!-- ============ SECURITY & TRUST ============ -->
+<section style="background:#F4F7FA;padding:96px 0;">
+  <div class="lc-in lc-2col" style="display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start;">
+    <div class="reveal">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1E5FBF;margin-bottom:14px;">Built to be trusted</div>
+      <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:40px;line-height:1.08;letter-spacing:-.02em;margin:0 0 18px;">Security and compliance are the point — not an add-on.</h2>
+      <p style="font-size:16px;line-height:1.6;color:#4A5A70;margin:0 0 22px;">Built on real government payment experience. Haploos runs virtual card programs for public agencies; LotteryCards applies that discipline to one job — paying winners.</p>
+      <div style="display:flex;align-items:flex-start;gap:12px;background:#EAF3EE;border:1px solid #CBE5D8;border-radius:14px;padding:18px 20px;margin:0 0 18px;">
+        <svg viewBox="0 0 24 24" style="width:22px;height:22px;flex:none;margin-top:2px;"><path d="M12 2 L21 6 V11 C21 16.5 17.2 20.8 12 22 C6.8 20.8 3 16.5 3 11 V6 Z" fill="#1F9D6F"></path><path d="M8.5 12 L11 14.5 L15.5 9.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <div style="font-size:14px;line-height:1.6;color:#2C5443;"><b style="color:#14503A;">Funds are FDIC-insured and Mastercard-protected.</b> Winnings sit in FDIC-insured accounts, and because every card runs on Mastercard — a trusted global brand — all standard consumer protections apply.</div>
+      </div>
+      <div style="background:#fff;border:1px solid #E6ECF3;border-radius:14px;padding:18px 20px;font-size:14px;line-height:1.6;color:#4A5A70;">
+        <b style="color:#0B2545;">Clear limits, on purpose.</b> Not a bank replacement, not for every player, and not a shortcut around controls. Cash and checks stay where they belong — identity, tax, fraud, and state rules still apply.
+      </div>
+    </div>
+    <div class="reveal lc-pair" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div style="background:#fff;border:1px solid #E6ECF3;border-radius:16px;padding:24px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:17px;margin-bottom:8px;">Access controls</div><p style="font-size:13.5px;line-height:1.6;color:#4A5A70;margin:0;">Only the right people can approve, review, and manage payouts.</p></div>
+      <div style="background:#fff;border:1px solid #E6ECF3;border-radius:16px;padding:24px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:17px;margin-bottom:8px;">Clear records</div><p style="font-size:13.5px;line-height:1.6;color:#4A5A70;margin:0;">Payout history, identity checks, and reporting kept in one place for audit.</p></div>
+      <div style="background:#fff;border:1px solid #E6ECF3;border-radius:16px;padding:24px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:17px;margin-bottom:8px;">Works with your stack</div><p style="font-size:13.5px;line-height:1.6;color:#4A5A70;margin:0;">Connects to existing lottery infrastructure — no rip and replace.</p></div>
+      <div style="background:#fff;border:1px solid #E6ECF3;border-radius:16px;padding:24px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:17px;margin-bottom:8px;">Reliable support</div><p style="font-size:13.5px;line-height:1.6;color:#4A5A70;margin:0;">A system that stays available and a team that responds when it matters.</p></div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ FINAL CTA ============ -->
+<section style="background:radial-gradient(120% 130% at 20% 0%, #14345B 0%, #0A1A30 60%, #071322 100%);color:#fff;padding:100px 0;">
+  <div class="lc-in reveal" style="text-align:center;max-width:56ch;margin:0 auto;">
+    <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E9C766;margin-bottom:18px;">{{ finalEyebrow }}</div>
+    <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:52px;line-height:1.02;letter-spacing:-.025em;margin:0 0 20px;">{{ finalTitle }}</h2>
+    <p style="font-size:18px;line-height:1.6;color:#B8C6DB;margin:0 0 34px;">{{ finalSub }}</p>
+    <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
+      <a class="lc-cta" href="{{ heroCtaHref }}" style="font-size:16px;font-weight:700;color:#3A2B08;background:#E9C766;padding:16px 34px;border-radius:12px;box-shadow:0 12px 28px -8px rgba(201,150,44,.6);">{{ heroCta }}</a>
+      <a class="lc-cta" href="{{ finalCta2Href }}" style="font-size:16px;font-weight:600;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.28);padding:16px 32px;border-radius:12px;">{{ finalCta2 }}</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer style="background:#071322;color:#8FA3C2;padding:56px 0 40px;">
+  <div class="lc-in lc-foot" style="display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:start;">
+    <div>
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:14px;">{{ iconFoot }}<span style="font-family:'Space Grotesk';font-weight:700;font-size:18px;color:#fff;">LotteryCards</span></div>
+      <p style="font-size:13.5px;line-height:1.6;max-width:40ch;margin:0;">Virtual disbursement platform for state lotteries, technology partners, and cardholders.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5C708C;margin-bottom:2px;">Company</div>
+      <a href="connect.html" style="color:#8FA3C2;">Connect</a>
+      <a href="legal.html" style="color:#8FA3C2;">Legal</a>
+      <a href="{{ footLoginHref }}" style="color:#8FA3C2;">{{ footLoginLabel }}</a>
+    </div>
+  </div>
+  <div class="lc-in" style="border-top:1px solid rgba(255,255,255,.08);margin-top:36px;padding-top:20px;display:flex;justify-content:space-between;font-size:12px;color:#5C708C;">
+    <span>© 2026 LotteryCards</span><span>Powered by Haploos</span>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { agencyView: false, menuOpen: false };
+
+  icon(size) {
+    const g = React.createElement;
+    const id = 'lcg' + (this._n = (this._n || 0) + 1);
+    return g('svg', { viewBox: '0 0 200 200', width: size, height: size, style: { display: 'block', flex: 'none' } },
+      g('defs', null, g('linearGradient', { id, x1: 0, y1: 0, x2: 1, y2: 1 },
+        g('stop', { offset: 0, stopColor: '#F0D488' }), g('stop', { offset: 1, stopColor: '#C9962C' }))),
+      g('rect', { x: 0, y: 0, width: 200, height: 200, rx: 44, fill: 'url(#' + id + ')' }),
+      g('g', { transform: 'rotate(6 100 100)' },
+        g('rect', { x: 44, y: 70, width: 108, height: 70, rx: 13, fill: '#0B2545' }),
+        g('rect', { x: 58, y: 86, width: 24, height: 16, rx: 3, fill: '#FFFFFF', opacity: 0.9 }),
+        g('rect', { x: 58, y: 112, width: 52, height: 6, rx: 3, fill: '#4A6690' })),
+      g('path', { d: 'M150 46 L156 64 L174 70 L156 76 L150 94 L144 76 L126 70 L144 64 Z', fill: '#FFFFFF' }));
+  }
+
+  channelIcon(kind) {
+    const g = React.createElement;
+    const c = '#C9962C';
+    if (kind === 'office') return g('svg', { viewBox: '0 0 32 32', width: 26, height: 26 },
+      g('path', { d: 'M4 12 L16 5 L28 12 Z', fill: c }),
+      g('rect', { x: 7, y: 13, width: 3.5, height: 11, fill: c }),
+      g('rect', { x: 14.25, y: 13, width: 3.5, height: 11, fill: c }),
+      g('rect', { x: 21.5, y: 13, width: 3.5, height: 11, fill: c }),
+      g('rect', { x: 4, y: 25, width: 24, height: 3, rx: 1, fill: c }));
+    if (kind === 'retail') return g('svg', { viewBox: '0 0 32 32', width: 26, height: 26 },
+      g('path', { d: 'M6 7 h20 l2 6 h-24 Z', fill: c }),
+      g('rect', { x: 7, y: 14, width: 18, height: 12, rx: 1.5, fill: 'none', stroke: c, strokeWidth: 2.4 }),
+      g('rect', { x: 13, y: 18, width: 6, height: 8, fill: c }));
+    return g('svg', { viewBox: '0 0 32 32', width: 26, height: 26 },
+      g('rect', { x: 10, y: 5, width: 12, height: 22, rx: 3, fill: 'none', stroke: c, strokeWidth: 2.4 }),
+      g('rect', { x: 13, y: 9, width: 6, height: 1.8, rx: .9, fill: c }),
+      g('circle', { cx: 16, cy: 23.5, r: 1.5, fill: c }));
+  }
+
+  actRow(glyph, bg, fg, label, sub, amt, amtColor) {
+    const g = React.createElement;
+    return g('div', { style: { display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0' } },
+      g('div', { style: { width: 30, height: 30, borderRadius: 9, background: bg, color: fg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, flex: 'none' } }, glyph),
+      g('div', { style: { flex: 1, minWidth: 0 } },
+        g('div', { style: { fontSize: 12, fontWeight: 600, color: '#0B2545' } }, label),
+        g('div', { style: { fontSize: 10.5, color: '#8A97A8' } }, sub)),
+      g('div', { style: { fontSize: 12.5, fontWeight: 700, color: amtColor } }, amt));
+  }
+
+  phone() {
+    const g = React.createElement;
+    return g('div', { style: { width: 244, background: '#0A0D13', borderRadius: 42, padding: 9, boxShadow: '0 40px 70px -24px rgba(0,0,0,.6)', flex: 'none' } },
+      g('div', { style: { background: '#F3F6FA', borderRadius: 34, overflow: 'hidden', height: 548, display: 'flex', flexDirection: 'column' } },
+        g('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '13px 20px 4px', fontSize: 12, fontWeight: 700, color: '#0B2545' } },
+          g('span', null, '9:41'),
+          g('span', { style: { fontSize: 10, color: '#0B2545' } }, '\u25CF\u25CF\u25CF \u25CB')),
+        g('div', { style: { padding: '8px 16px 16px', display: 'flex', flexDirection: 'column', gap: 12 } },
+          g('div', { style: { display: 'flex', alignItems: 'center', gap: 9 } },
+            g('div', { style: { width: 30, height: 30, borderRadius: '50%', background: '#0B2545', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700 } }, 'A'),
+            g('div', null,
+              g('div', { style: { fontSize: 10.5, color: '#6B7A90' } }, 'Welcome back'),
+              g('div', { style: { fontSize: 14, fontWeight: 700, color: '#0B2545' } }, 'Alex Rivera'))),
+          g('div', { style: { background: 'rgba(11,37,69,.05)', border: '1px solid rgba(11,37,69,.07)', borderRadius: 14, padding: '10px 14px', color: '#0B2545' } },
+            g('div', { style: { fontSize: 10, color: '#6B7A90' } }, 'Available balance'),
+            g('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 2 } },
+              g('div', { style: { fontSize: 20, fontWeight: 700, letterSpacing: '-.02em' } }, '$1,248.50'),
+              g('div', { style: { fontSize: 10, fontWeight: 700, background: '#E9C766', color: '#3A2B08', borderRadius: 8, padding: '6px 11px', whiteSpace: 'nowrap', flex: 'none' } }, 'Add Prize'))),
+          g('div', { style: { background: 'linear-gradient(115deg,#2B6BC9 0%,#1A4B8F 45%,#0B2545 100%)', borderRadius: 14, padding: '14px 15px', color: '#fff', position: 'relative', overflow: 'hidden', aspectRatio: '1.586', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 10px 22px -10px rgba(11,37,69,.45)' } },
+            g('div', { style: { position: 'absolute', inset: 0, background: 'radial-gradient(90% 80% at 0% 0%, rgba(233,199,102,.28) 0%, rgba(233,199,102,0) 55%)' } }),
+            g('div', { className: 'lc-holo', style: { position: 'absolute', inset: 0, background: 'linear-gradient(125deg, rgba(255,80,180,.5) 0%, rgba(80,220,255,.45) 28%, rgba(255,230,80,.4) 52%, rgba(150,80,255,.5) 78%, rgba(80,255,180,.4) 100%)', mixBlendMode: 'overlay', pointerEvents: 'none' } }),
+            g('div', { className: 'lc-shimmer', style: { position: 'absolute', top: -40, bottom: -40, left: 0, width: 54, background: 'linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.22), rgba(255,255,255,0))', pointerEvents: 'none' } }),
+            g('div', { style: { position: 'absolute', right: -34, bottom: -52, width: 130, height: 130, borderRadius: '50%', border: '1.5px solid rgba(233,199,102,.35)' } }),
+            g('div', { style: { position: 'absolute', right: -14, bottom: -66, width: 130, height: 130, borderRadius: '50%', border: '1.5px solid rgba(233,199,102,.2)' } }),
+            g('svg', { viewBox: '0 0 24 24', style: { position: 'absolute', right: -16, top: -16, width: 96, height: 96, opacity: 0.16 } },
+              g('path', { d: 'M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z', fill: '#E9C766' })),
+            g('svg', { viewBox: '0 0 24 24', style: { position: 'absolute', right: 34, top: 40, width: 15, height: 15, opacity: 0.55 } },
+              g('path', { d: 'M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z', fill: '#E9C766' })),
+            g('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
+              g('div', { style: { display: 'flex', alignItems: 'center', gap: 5 } },
+                g('svg', { viewBox: '0 0 24 24', style: { width: 12, height: 12 } },
+                  g('path', { d: 'M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z', fill: '#E9C766' })),
+                g('span', { style: { fontSize: 10, fontWeight: 700, letterSpacing: '.1em' } }, 'STATE LOTTERY'))),
+
+            g('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' } },
+              g('span', { style: { fontSize: 12.5, fontFamily: 'monospace', letterSpacing: '.12em' } }, '\u2022\u2022\u2022\u2022 4821'),
+              g('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 } },
+                g('svg', { viewBox: '0 0 36 22', style: { width: 38, height: 23 } },
+                  g('circle', { cx: 13, cy: 11, r: 10, fill: '#EB001B' }),
+                  g('circle', { cx: 23, cy: 11, r: 10, fill: '#F79E1B' }),
+                  g('path', { d: 'M18 3.05 a10 10 0 0 1 0 15.9 a10 10 0 0 1 0 -15.9 Z', fill: '#FF5F00' })),
+                g('span', { style: { fontSize: 6.5, fontWeight: 700, letterSpacing: '.12em', color: '#C9D6E8' } }, 'PRE-PAID')))),
+          g('div', null,
+            g('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 2 } },
+              g('span', { style: { fontWeight: 700, color: '#0B2545' } }, 'Recent activity'),
+              g('span', { style: { color: '#1E5FBF', fontWeight: 600 } }, 'View all')),
+            this.actRow('\u2605', '#FDF3D6', '#C9962C', 'MegaMillions', 'Instant win \u00b7 Today', '+$50.00', '#1F9D6F'),
+            this.actRow('L', '#EDF1F6', '#4A5A70', 'Lucky 7s \u2014 5-pack', 'Purchase \u00b7 Today', '\u2212$10.00', '#0B2545'),
+            this.actRow('\u2193', '#EDF1F6', '#4A5A70', 'ATM Withdrawal', 'To \u2022\u2022\u2022\u2022 4417 \u00b7 Jun 8', '\u2212$40.00', '#0B2545'))
+        )));
+  }
+
+  toggle() {
+    const g = React.createElement;
+    const agency = this.state.agencyView;
+    const tab = (active, label, onClick) => g('button', { onClick, style: {
+      flex: 'none', whiteSpace: 'nowrap', border: 'none', cursor: 'pointer', fontFamily: 'Inter', fontSize: 13.5, fontWeight: 700,
+      padding: '11px 20px', borderRadius: 9, transition: 'all .18s ease',
+      background: active ? '#E9C766' : 'transparent', color: active ? '#3A2B08' : '#9DB0C9' } }, label);
+    return g('div', { style: { display: 'inline-flex', gap: 4, background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.12)', borderRadius: 12, padding: 4 } },
+      tab(!agency, 'Winner', () => { this.setState({ agencyView: false }); window.scrollTo({ top: 0, behavior: 'smooth' }); }),
+      tab(agency, 'Agency', () => { this.setState({ agencyView: true }); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+  }
+
+  componentDidMount() {
+    this._closeMenu = (e) => {
+      if (e.target && e.target.closest && e.target.closest('[data-nav-menu]')) return;
+      if (this.state.menuOpen) this.setState({ menuOpen: false });
+    };
+    document.addEventListener('click', this._closeMenu);
+    if (typeof IntersectionObserver === 'undefined') return;
+    const obs = new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    requestAnimationFrame(() => document.querySelectorAll('.reveal').forEach(el => obs.observe(el)));
+  }
+
+  renderVals() {
+    const agency = this.state.agencyView;
+    return {
+      iconNav: this.icon(34), iconFoot: this.icon(30),
+      iconOffice: this.channelIcon('office'), iconRetail: this.channelIcon('retail'), iconOnline: this.channelIcon('online'),
+      phoneHero: this.phone(),
+      toggle: this.toggle(),
+      journeyFlag: agency
+        ? 'The claim and the payout stop being the low points. The prize lands on a card in seconds \u2014 so the win stays a win, all the way to spend.'
+        : "It's your money. Get it now. Your prize lands on your card in seconds \u2014 no walking, no working around office hours, no waiting.",
+      journeySub: agency
+        ? 'The experience breaks at the exact moment it should be strongest. Players buy, dream, and win \u2014 then hit paperwork, a cash-strapped till, or a check in the mail.'
+        : "You won \u2014 so why should you walk, work, and wait for your own money? A clerk without enough cash in the till, a lottery office across town that's only open while you're at work\u2026 none of that should get to ruin your moment. This is the best part. It should be yours the second you win.",
+      heroEyebrow: agency ? 'For state lotteries' : 'For winners',
+      heroTitle: agency ? 'Winning should feel like winning. For everyone.' : 'Win. Tap. Pay.',
+      heroTitleSize: agency ? 50 : 62,
+      heroSub: agency
+        ? 'Instant payouts that work for your office, your retailers, and your winners. No checks to print, mail, or reconcile — and clean records for every disbursement.'
+        : 'Your prize goes straight to a virtual card in your Apple, Google, or Samsung Wallet in seconds. No check, no waiting, no trip to an office.',
+      stat1Sub: agency
+        ? 'money on your phone — sent from the lottery office, retail, or online claims'
+        : 'your prize is on your phone in seconds — however you claim',
+      stat2Title: agency ? 'Zero checks' : 'No waiting',
+      stat2Sub: agency
+        ? 'nothing to print, mail, or reconcile — for you or your winners'
+        : 'no check in the mail, no trip back to the store or lottery office',
+      stat3Sub: agency
+        ? 'Apple, Google & Samsung — plus Venmo, Cash App, PayPal, and any app that accepts a debit card'
+        : 'add it to Apple, Google or Samsung Wallet — or link it to Venmo, Cash App & PayPal',
+      heroCta: agency ? 'Request a demo' : 'Winner Login',
+      heroCtaHref: agency ? 'connect.html' : 'https://winners.lotterycards.com/login',
+      heroCta2: agency ? 'Talk to the crew' : 'How it works',
+      heroCta2Href: agency ? 'connect.html' : '#yourcard',
+      agencyView: agency, winnerView: !agency,
+      menuOpen: this.state.menuOpen,
+      toggleMenu: (e) => { e.stopPropagation(); this.setState(s => ({ menuOpen: !s.menuOpen })); },
+      setWinnerView: (e) => { e.stopPropagation(); this.setState({ agencyView: false, menuOpen: false }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      setAgencyView: (e) => { e.stopPropagation(); this.setState({ agencyView: true, menuOpen: false }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      winnerMark: agency ? '' : '\u2713',
+      agencyMark: agency ? '\u2713' : '',
+      navCtaLabel: agency ? 'Request a demo' : 'Winner Login',
+      navCtaHref: agency ? 'connect.html' : 'https://winners.lotterycards.com/login',
+      footLoginLabel: agency ? 'Agency Login' : 'Winner Login',
+      footLoginHref: agency ? 'https://agency.lotterycards.com/login' : 'https://winners.lotterycards.com/login',
+      finalEyebrow: agency ? 'Join the conversation' : 'Ready when you win',
+      finalTitle: agency ? "People aren't leaving cash. They're leaving friction." : 'Your win shouldn\u2019t have to wait.',
+      finalSub: agency
+        ? "Washington built the first lift. Tell us how you pay winners today, and we'll show you where LotteryCards fits."
+        : 'Log in to see your balance, add your card to your wallet, and spend your winnings anywhere.',
+      finalCta2: agency ? 'Agency Login' : 'Support Crew',
+      finalCta2Href: agency ? 'https://agency.lotterycards.com/login' : 'connect.html',
+    };
+  }
+}
+</script>
+</body>
+</html>

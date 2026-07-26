@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#ECE9E2;font-family:'Inter',sans-serif;color:#0B2545;}
+  .dv-turn{padding:44px 48px 36px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px;}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 24px;}
+  .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#0B2545;color:#fff;border-radius:4px;text-decoration:none;}
+  .dv-tname{font:600 14px/1.3 'Space Grotesk',sans-serif;color:#0B2545;}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px;}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:400 12px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55);}
+  .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.09);color:#0B2545;border-radius:5px;text-decoration:none;}
+  .dv-opt:target .dv-oid{background:#1E5FBF;color:#fff;}
+  .dv-card{max-width:100%;border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(11,37,69,.13);}
+  .dv-next{margin:26px 0 0;font:12px/1.6 system-ui,sans-serif;color:rgba(0,0,0,.5);}
+  .dv-next a{color:#1E5FBF;text-decoration:none;}
+  a{text-decoration:none;}
+  @keyframes lcfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  .lc-float{animation:lcfloat 5.5s ease-in-out infinite;}
+  .lc-cta{transition:transform .15s ease, box-shadow .15s ease, background .15s ease;}
+  .lc-cta:hover{transform:translateY(-1px);}
+  .lc-link{transition:color .15s ease;}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t2">
+  <div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Three ways to show the "getting paid" friction (for the journey graph on the <a class="dv-oid" href="#1c">1c</a> page)</span></div>
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="2a">
+      <div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a> The fork — every old path sags into the dip; one green line skips it</div>
+      <div class="dv-card" style="width:1100px;background:#fff;padding:36px 30px 24px;">
+        <svg viewBox="0 0 1100 420" style="width:100%;height:auto;display:block;">
+          <defs>
+            <linearGradient id="g2af" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8FB3DC"></stop><stop offset="1" stop-color="#C9962C"></stop></linearGradient>
+            <linearGradient id="g2ar" gradientUnits="userSpaceOnUse" x1="720" y1="0" x2="940" y2="0"><stop offset="0" stop-color="#C4574F"></stop><stop offset="1" stop-color="#C9962C"></stop></linearGradient>
+          </defs>
+          <line x1="24" y1="90" x2="1076" y2="90" stroke="#EDF1F6" stroke-width="1.5"></line>
+          <line x1="24" y1="200" x2="1076" y2="200" stroke="#EDF1F6" stroke-width="1.5"></line>
+          <line x1="24" y1="298" x2="1076" y2="298" stroke="#EDF1F6" stroke-width="1.5"></line>
+          <path d="M120,225 C190,210 250,198 320,178 C390,155 450,125 520,80" fill="none" stroke="url(#g2af)" stroke-width="7" stroke-linecap="round"></path>
+          <path d="M520,80 C580,130 645,215 705,262" fill="none" stroke="#C77E5B" stroke-width="4.5" stroke-linecap="round"></path>
+          <path d="M520,80 C580,145 650,250 720,300" fill="none" stroke="#C4574F" stroke-width="5" stroke-linecap="round"></path>
+          <path d="M520,80 C585,160 655,280 733,328" fill="none" stroke="#9E4A45" stroke-width="4.5" stroke-linecap="round"></path>
+          <path d="M720,300 C790,292 870,205 940,105" fill="none" stroke="url(#g2ar)" stroke-width="7" stroke-linecap="round"></path>
+          <path d="M520,80 C660,62 810,60 940,68" fill="none" stroke="#1F9D6F" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 14"></path>
+          <circle cx="120" cy="225" r="10" fill="#8FB3DC"></circle>
+          <circle cx="320" cy="178" r="10" fill="#6E9CCB"></circle>
+          <circle cx="520" cy="80" r="13" fill="#C9962C" stroke="#F0D488" stroke-width="4"></circle>
+          <circle cx="705" cy="262" r="7" fill="#C77E5B"></circle>
+          <circle cx="720" cy="300" r="8" fill="#C4574F"></circle>
+          <circle cx="733" cy="328" r="7" fill="#9E4A45"></circle>
+          <circle cx="940" cy="105" r="12" fill="#C9962C"></circle>
+          <circle cx="940" cy="68" r="11" fill="#1F9D6F"></circle>
+          <text x="120" y="266" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Buy</text>
+          <text x="320" y="219" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Dream</text>
+          <text x="520" y="48" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#C9962C">Win</text>
+          <text x="958" y="112" text-anchor="start" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Spend</text>
+          <text x="988" y="44" text-anchor="end" font-family="Space Grotesk" font-size="23" font-weight="700" fill="#1F9D6F">With LotteryCards</text>
+          <text x="720" y="360" text-anchor="middle" font-family="Inter" font-size="18" font-weight="600" fill="#C77E5B">Office — a trip + lines</text>
+          <text x="720" y="384" text-anchor="middle" font-family="Inter" font-size="18" font-weight="600" fill="#C4574F">Mail — 4–6 weeks</text>
+          <text x="720" y="408" text-anchor="middle" font-family="Inter" font-size="18" font-weight="600" fill="#9E4A45">Retail — till may be short</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="2b">
+      <div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a> The shaded gap — the wedge between "seconds" and reality IS the product</div>
+      <div class="dv-card" style="width:1100px;background:#fff;padding:36px 30px 24px;">
+        <svg viewBox="0 0 1100 400" style="width:100%;height:auto;display:block;">
+          <defs>
+            <linearGradient id="g2bf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8FB3DC"></stop><stop offset="1" stop-color="#C9962C"></stop></linearGradient>
+            <linearGradient id="g2bc" gradientUnits="userSpaceOnUse" x1="520" y1="0" x2="720" y2="0"><stop offset="0" stop-color="#C9962C"></stop><stop offset="1" stop-color="#C4574F"></stop></linearGradient>
+            <linearGradient id="g2br" gradientUnits="userSpaceOnUse" x1="720" y1="0" x2="940" y2="0"><stop offset="0" stop-color="#C4574F"></stop><stop offset="1" stop-color="#C9962C"></stop></linearGradient>
+          </defs>
+          <line x1="24" y1="90" x2="1076" y2="90" stroke="#EDF1F6" stroke-width="1.5"></line>
+          <line x1="24" y1="200" x2="1076" y2="200" stroke="#EDF1F6" stroke-width="1.5"></line>
+          <line x1="24" y1="298" x2="1076" y2="298" stroke="#EDF1F6" stroke-width="1.5"></line>
+          <path d="M520,80 C660,62 810,60 940,68 L940,105 C870,205 790,292 720,300 C650,245 580,140 520,80 Z" fill="#C4574F" opacity="0.07"></path>
+          <path d="M120,225 C190,210 250,198 320,178 C390,155 450,125 520,80" fill="none" stroke="url(#g2bf)" stroke-width="7" stroke-linecap="round"></path>
+          <path d="M520,80 C580,140 650,245 720,300" fill="none" stroke="url(#g2bc)" stroke-width="7" stroke-linecap="round"></path>
+          <path d="M720,300 C790,292 870,205 940,105" fill="none" stroke="url(#g2br)" stroke-width="7" stroke-linecap="round"></path>
+          <path d="M520,80 C660,62 810,60 940,68" fill="none" stroke="#1F9D6F" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 14"></path>
+          <circle cx="120" cy="225" r="10" fill="#8FB3DC"></circle>
+          <circle cx="320" cy="178" r="10" fill="#6E9CCB"></circle>
+          <circle cx="520" cy="80" r="13" fill="#C9962C" stroke="#F0D488" stroke-width="4"></circle>
+          <circle cx="720" cy="300" r="10" fill="#C4574F"></circle>
+          <circle cx="940" cy="105" r="12" fill="#C9962C"></circle>
+          <circle cx="940" cy="68" r="11" fill="#1F9D6F"></circle>
+          <text x="745" y="168" text-anchor="middle" font-family="Inter" font-size="20" font-weight="700" fill="#B4504A">4–6 weeks of waiting</text>
+          <text x="745" y="193" text-anchor="middle" font-family="Inter" font-size="18" font-weight="600" fill="#B4504A">— or a trip across town</text>
+          <text x="120" y="266" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Buy</text>
+          <text x="320" y="219" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Dream</text>
+          <text x="520" y="48" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#C9962C">Win</text>
+          <text x="720" y="336" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#C4574F">Paid</text>
+          <text x="958" y="112" text-anchor="start" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Spend</text>
+          <text x="988" y="44" text-anchor="end" font-family="Space Grotesk" font-size="23" font-weight="700" fill="#1F9D6F">With LotteryCards</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="dv-opt" id="2c">
+      <div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a> The receipt strip — three stamped tickets make the pain concrete</div>
+      <div class="dv-card" style="width:1100px;background:#fff;padding:36px 30px 24px;">
+        <svg viewBox="0 0 1100 450" style="width:100%;height:auto;display:block;">
+          <defs>
+            <linearGradient id="g2cf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8FB3DC"></stop><stop offset="1" stop-color="#C9962C"></stop></linearGradient>
+            <linearGradient id="g2cc" gradientUnits="userSpaceOnUse" x1="520" y1="0" x2="720" y2="0"><stop offset="0" stop-color="#C9962C"></stop><stop offset="1" stop-color="#C4574F"></stop></linearGradient>
+            <linearGradient id="g2cr" gradientUnits="userSpaceOnUse" x1="720" y1="0" x2="940" y2="0"><stop offset="0" stop-color="#C4574F"></stop><stop offset="1" stop-color="#C9962C"></stop></linearGradient>
+          </defs>
+          <line x1="24" y1="90" x2="1076" y2="90" stroke="#EDF1F6" stroke-width="1.5"></line>
+          <line x1="24" y1="200" x2="1076" y2="200" stroke="#EDF1F6" stroke-width="1.5"></line>
+          <line x1="24" y1="298" x2="1076" y2="298" stroke="#EDF1F6" stroke-width="1.5"></line>
+          <path d="M120,225 C190,210 250,198 320,178 C390,155 450,125 520,80" fill="none" stroke="url(#g2cf)" stroke-width="7" stroke-linecap="round"></path>
+          <path d="M520,80 C580,140 650,245 720,300" fill="none" stroke="url(#g2cc)" stroke-width="7" stroke-linecap="round"></path>
+          <path d="M720,300 C790,292 870,205 940,105" fill="none" stroke="url(#g2cr)" stroke-width="7" stroke-linecap="round"></path>
+          <path d="M520,80 C660,62 810,60 940,68" fill="none" stroke="#1F9D6F" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 14"></path>
+          <circle cx="120" cy="225" r="10" fill="#8FB3DC"></circle>
+          <circle cx="320" cy="178" r="10" fill="#6E9CCB"></circle>
+          <circle cx="520" cy="80" r="13" fill="#C9962C" stroke="#F0D488" stroke-width="4"></circle>
+          <circle cx="720" cy="300" r="10" fill="#C4574F"></circle>
+          <circle cx="940" cy="105" r="12" fill="#C9962C"></circle>
+          <circle cx="940" cy="68" r="11" fill="#1F9D6F"></circle>
+          <text x="120" y="266" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Buy</text>
+          <text x="320" y="219" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Dream</text>
+          <text x="520" y="48" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#C9962C">Win</text>
+          <text x="720" y="336" text-anchor="middle" font-family="Inter" font-size="22" font-weight="700" fill="#C4574F">Paid</text>
+          <text x="958" y="112" text-anchor="start" font-family="Inter" font-size="22" font-weight="700" fill="#0B2545">Spend</text>
+          <text x="988" y="44" text-anchor="end" font-family="Space Grotesk" font-size="23" font-weight="700" fill="#1F9D6F">With LotteryCards</text>
+          <rect x="465" y="368" width="165" height="62" rx="7" fill="#FEF9F8" stroke="#C4574F" stroke-width="2" stroke-dasharray="6 4"></rect>
+          <text x="547" y="394" text-anchor="middle" font-family="monospace" font-size="15" font-weight="700" fill="#B4504A">WAIT 4–6 WKS</text>
+          <text x="547" y="415" text-anchor="middle" font-family="Inter" font-size="13" fill="#8A6B66">check in the mail</text>
+          <rect x="645" y="368" width="165" height="62" rx="7" fill="#FEF9F8" stroke="#C4574F" stroke-width="2" stroke-dasharray="6 4"></rect>
+          <text x="727" y="394" text-anchor="middle" font-family="monospace" font-size="15" font-weight="700" fill="#B4504A">DRIVE 40 MI</text>
+          <text x="727" y="415" text-anchor="middle" font-family="Inter" font-size="13" fill="#8A6B66">office hours only</text>
+          <rect x="825" y="368" width="165" height="62" rx="7" fill="#FEF9F8" stroke="#C4574F" stroke-width="2" stroke-dasharray="6 4"></rect>
+          <text x="907" y="394" text-anchor="middle" font-family="monospace" font-size="15" font-weight="700" fill="#B4504A">TILL SHORT</text>
+          <text x="907" y="415" text-anchor="middle" font-family="Inter" font-size="13" fill="#8A6B66">come back tomorrow</text>
+        </svg>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Try next: "put <a class="dv-oid" href="#2a">2a</a> on the landing page" · "<a class="dv-oid" href="#2b">2b</a> but with <a class="dv-oid" href="#2c">2c</a>'s tickets" · "tweak the fork labels"</p>
+</section>
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Three hero directions — each speaks to winners <em>and</em> agencies</span></div>
+  <div class="dv-opts">
+
+    <!-- ===================== 1a ===================== -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a> Split trust — agency headline left, winner-login rail right. Calm, institutional-warm.</div>
+      <div class="dv-card" style="width:1180px;background:#FFFFFF;">
+        <!-- nav -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 40px;border-bottom:1px solid #EAEEF3;">
+          <div style="display:flex;align-items:center;gap:11px;">{{ iconNavA }}<span style="font-family:'Space Grotesk';font-weight:700;font-size:19px;letter-spacing:-.01em;">LotteryCards</span></div>
+          <div style="display:flex;gap:26px;font-size:14px;font-weight:500;color:#4A5A70;">
+            <span>Lotteries</span><span>Players</span><span>Retailers</span><span>Security</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <a class="lc-cta" href="#1a" style="font-size:14px;font-weight:600;color:#0B2545;padding:9px 16px;border:1px solid #D8DFE8;border-radius:10px;">Winner login</a>
+            <a class="lc-cta" href="#1a" style="font-size:14px;font-weight:600;color:#fff;background:#0B2545;padding:10px 18px;border-radius:10px;">Request a demo</a>
+          </div>
+        </div>
+        <!-- hero -->
+        <div style="display:grid;grid-template-columns:1.05fr .95fr;gap:36px;padding:56px 40px 60px;align-items:center;">
+          <div>
+            <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1E5FBF;margin-bottom:16px;">For state lotteries</div>
+            <h1 style="font-family:'Space Grotesk';font-weight:700;font-size:52px;line-height:1.03;letter-spacing:-.02em;margin:0 0 20px;">Pay winners in minutes, not&nbsp;weeks.</h1>
+            <p style="font-size:17px;line-height:1.6;color:#4A5A70;margin:0 0 28px;max-width:46ch;">Printing, mailing, and clearing a check can take four to six weeks. LotteryCards drops approved winnings straight into a virtual card in Apple or Google Wallet — the moment the claim clears.</p>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px;">
+              <div style="display:flex;align-items:center;gap:11px;font-size:15px;font-weight:500;color:#0B2545;"><svg viewBox="0 0 24 24" style="width:17px;height:17px;flex:none"><path d="M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z" fill="#C9962C"/></svg>Funds ready in minutes, not weeks</div>
+              <div style="display:flex;align-items:center;gap:11px;font-size:15px;font-weight:500;color:#0B2545;"><svg viewBox="0 0 24 24" style="width:17px;height:17px;flex:none"><path d="M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z" fill="#C9962C"/></svg>No checks to print, mail, or reconcile</div>
+              <div style="display:flex;align-items:center;gap:11px;font-size:15px;font-weight:500;color:#0B2545;"><svg viewBox="0 0 24 24" style="width:17px;height:17px;flex:none"><path d="M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z" fill="#C9962C"/></svg>Clear audit records agencies can review</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;">
+              <a class="lc-cta" href="#1a" style="font-size:15px;font-weight:600;color:#fff;background:#0B2545;padding:14px 26px;border-radius:11px;box-shadow:0 8px 20px -6px rgba(11,37,69,.4);">Request a demo →</a>
+              <a class="lc-link" href="#1a" style="font-size:15px;font-weight:600;color:#1E5FBF;">See how it works</a>
+            </div>
+          </div>
+          <!-- winner rail -->
+          <div style="position:relative;background:radial-gradient(120% 90% at 70% 10%, #FBF3DC 0%, #F5F7FA 60%);border-radius:22px;padding:34px 30px;display:flex;flex-direction:column;align-items:center;">
+            <div style="align-self:stretch;background:#fff;border:1px solid #EEE4C6;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:26px;box-shadow:0 6px 18px -8px rgba(11,37,69,.2);">
+              {{ iconTinyA }}
+              <div style="flex:1;"><div style="font-size:13px;font-weight:700;color:#0B2545;">Just won a prize?</div><div style="font-size:12px;color:#6B7A90;">Your card is waiting.</div></div>
+              <a class="lc-cta" href="#1a" style="font-size:12px;font-weight:700;color:#3A2B08;background:#E9C766;padding:9px 13px;border-radius:9px;">Log in →</a>
+            </div>
+            <div class="lc-float">{{ phoneA }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1b ===================== -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a> The moment — celebratory, winner-first, agency band underneath. Warmest.</div>
+      <div class="dv-card" style="width:1180px;background:linear-gradient(180deg,#FDF6E4 0%, #FBFCFE 62%);">
+        <!-- nav -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 40px;">
+          <div style="display:flex;align-items:center;gap:11px;">{{ iconNavB }}<span style="font-family:'Space Grotesk';font-weight:700;font-size:19px;letter-spacing:-.01em;">LotteryCards</span></div>
+          <div style="display:flex;align-items:center;gap:18px;">
+            <a class="lc-link" href="#1b" style="font-size:14px;font-weight:600;color:#4A5A70;">For lottery agencies →</a>
+            <a class="lc-cta" href="#1b" style="font-size:14px;font-weight:700;color:#3A2B08;background:#E9C766;padding:11px 20px;border-radius:11px;box-shadow:0 8px 18px -6px rgba(201,150,44,.5);">Winner login</a>
+          </div>
+        </div>
+        <!-- hero -->
+        <div style="text-align:center;padding:50px 40px 20px;position:relative;">
+          <svg viewBox="0 0 24 24" style="width:22px;height:22px;position:absolute;left:16%;top:64px;opacity:.8"><path d="M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z" fill="#C9962C"/></svg>
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;position:absolute;right:20%;top:52px;opacity:.7"><path d="M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z" fill="#1E5FBF"/></svg>
+          <svg viewBox="0 0 24 24" style="width:17px;height:17px;position:absolute;right:14%;top:150px;opacity:.65"><path d="M12 2 L14 9 L21 12 L14 15 L12 22 L10 15 L3 12 L10 9 Z" fill="#1F9D6F"/></svg>
+          <div style="font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#C9962C;margin-bottom:18px;">You won</div>
+          <h1 style="font-family:'Space Grotesk';font-weight:700;font-size:64px;line-height:1.0;letter-spacing:-.025em;margin:0 auto 20px;max-width:16ch;">Your money's&nbsp;ready. Right&nbsp;now.</h1>
+          <p style="font-size:18px;line-height:1.6;color:#4A5A70;margin:0 auto 30px;max-width:52ch;">No check in the mail. No weeks of waiting. The moment your claim clears, your prize lands on a card in your Apple or Google Wallet — ready to spend anywhere.</p>
+          <div style="display:flex;justify-content:center;gap:16px;margin-bottom:44px;">
+            <a class="lc-cta" href="#1b" style="font-size:16px;font-weight:700;color:#3A2B08;background:#E9C766;padding:15px 30px;border-radius:12px;box-shadow:0 10px 24px -6px rgba(201,150,44,.55);">Winner login</a>
+            <a class="lc-cta" href="#1b" style="font-size:16px;font-weight:600;color:#0B2545;background:#fff;border:1px solid #E1D6B4;padding:15px 28px;border-radius:12px;">Request a demo</a>
+          </div>
+          <div class="lc-float" style="display:flex;justify-content:center;">{{ phoneB }}</div>
+        </div>
+        <!-- agency band -->
+        <div style="background:#0B2545;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px 44px;margin-top:8px;">
+          <div style="font-size:15px;line-height:1.5;"><span style="font-weight:700;color:#E9C766;">Run a state lottery?</span> &nbsp;Cut the check run, lower disbursement costs, and pay winners the same day.</div>
+          <a class="lc-cta" href="#1b" style="flex:none;font-size:14px;font-weight:600;color:#0B2545;background:#fff;padding:11px 20px;border-radius:10px;">Request a demo →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== 1c ===================== -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a> Product-forward fintech — dark, one hero, an interactive audience toggle. Boldest. <em>(try the toggle)</em></div>
+      <div class="dv-card" style="width:1180px;background:radial-gradient(130% 120% at 80% -10%, #14345B 0%, #0A1A30 55%, #071322 100%);color:#fff;">
+        <!-- nav -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 40px;border-bottom:1px solid rgba(255,255,255,.08);">
+          <div style="display:flex;align-items:center;gap:11px;">{{ iconNavC }}<span style="font-family:'Space Grotesk';font-weight:700;font-size:19px;letter-spacing:-.01em;color:#fff;">LotteryCards</span></div>
+          <div style="display:flex;gap:26px;font-size:14px;font-weight:500;color:#9DB0C9;">
+            <span>Lotteries</span><span>Players</span><span>Retailers</span><span>Security</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <a class="lc-cta" href="#1c" style="font-size:14px;font-weight:600;color:#fff;padding:9px 16px;border:1px solid rgba(255,255,255,.22);border-radius:10px;">Winner login</a>
+            <a class="lc-cta" href="#1c" style="font-size:14px;font-weight:700;color:#3A2B08;background:#E9C766;padding:10px 18px;border-radius:10px;">Request a demo</a>
+          </div>
+        </div>
+        <!-- hero -->
+        <div style="display:grid;grid-template-columns:1.1fr .9fr;gap:36px;padding:48px 40px 30px;align-items:center;">
+          <div>
+            {{ toggle1c }}
+            <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E9C766;margin:26px 0 16px;">{{ hero1cEyebrow }}</div>
+            <h1 style="font-family:'Space Grotesk';font-weight:700;font-size:58px;line-height:1.0;letter-spacing:-.025em;margin:0 0 20px;">{{ hero1cTitle }}</h1>
+            <p style="font-size:17px;line-height:1.6;color:#B8C6DB;margin:0 0 30px;max-width:44ch;">{{ hero1cSub }}</p>
+            <div style="display:flex;align-items:center;gap:16px;">
+              <a class="lc-cta" href="#1c" style="font-size:15px;font-weight:700;color:#3A2B08;background:#E9C766;padding:14px 26px;border-radius:11px;box-shadow:0 10px 24px -8px rgba(201,150,44,.6);">{{ hero1cCta }}</a>
+              <a class="lc-link" href="#1c" style="font-size:15px;font-weight:600;color:#7FC9F0;">{{ hero1cCta2 }}</a>
+            </div>
+          </div>
+          <div class="lc-float" style="display:flex;justify-content:center;">{{ phoneC }}</div>
+        </div>
+        <!-- stat strip -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.08);">
+          <div style="padding:26px 40px;border-right:1px solid rgba(255,255,255,.08);"><div style="font-family:'Space Grotesk';font-weight:700;font-size:30px;color:#fff;">Minutes</div><div style="font-size:13px;color:#9DB0C9;margin-top:4px;">to funds, once a claim clears</div></div>
+          <div style="padding:26px 40px;border-right:1px solid rgba(255,255,255,.08);"><div style="font-family:'Space Grotesk';font-weight:700;font-size:30px;color:#fff;">4–6 weeks</div><div style="font-size:13px;color:#9DB0C9;margin-top:4px;">typical wait a paper check replaces</div></div>
+          <div style="padding:26px 40px;"><div style="font-family:'Space Grotesk';font-weight:700;font-size:30px;color:#fff;">Apple &amp; Google</div><div style="font-size:13px;color:#9DB0C9;margin-top:4px;">Wallet — spend anywhere, instantly</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Try next: "build out <a class="dv-oid" href="#1a">1a</a> into the full page" · "make <a class="dv-oid" href="#1b">1b</a> feel more premium/less bright" · "combine <a class="dv-oid" href="#1c">1c</a>'s toggle with <a class="dv-oid" href="#1a">1a</a>'s layout" · "new hero directions"</p>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { agencyView: false };
+
+  icon(size) {
+    const g = React.createElement;
+    const id = 'lcg' + (this._n = (this._n || 0) + 1);
+    return g('svg', { viewBox: '0 0 200 200', width: size, height: size, style: { display: 'block', flex: 'none' } },
+      g('defs', null, g('linearGradient', { id, x1: 0, y1: 0, x2: 1, y2: 1 },
+        g('stop', { offset: 0, stopColor: '#F0D488' }), g('stop', { offset: 1, stopColor: '#C9962C' }))),
+      g('rect', { x: 0, y: 0, width: 200, height: 200, rx: 44, fill: 'url(#' + id + ')' }),
+      g('g', { transform: 'rotate(6 100 100)' },
+        g('rect', { x: 44, y: 70, width: 108, height: 70, rx: 13, fill: '#0B2545' }),
+        g('rect', { x: 58, y: 86, width: 24, height: 16, rx: 3, fill: '#FFFFFF', opacity: 0.9 }),
+        g('rect', { x: 58, y: 112, width: 52, height: 6, rx: 3, fill: '#4A6690' })),
+      g('path', { d: 'M150 46 L156 64 L174 70 L156 76 L150 94 L144 76 L126 70 L144 64 Z', fill: '#FFFFFF' })
+    );
+  }
+
+  actRow(glyph, bg, fg, label, sub, amt, amtColor) {
+    const g = React.createElement;
+    return g('div', { style: { display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0' } },
+      g('div', { style: { width: 30, height: 30, borderRadius: 9, background: bg, color: fg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, flex: 'none' } }, glyph),
+      g('div', { style: { flex: 1, minWidth: 0 } },
+        g('div', { style: { fontSize: 12, fontWeight: 600, color: '#0B2545' } }, label),
+        g('div', { style: { fontSize: 10.5, color: '#8A97A8' } }, sub)),
+      g('div', { style: { fontSize: 12.5, fontWeight: 700, color: amtColor } }, amt)
+    );
+  }
+
+  phone() {
+    const g = React.createElement;
+    return g('div', { style: { width: 236, background: '#0A0D13', borderRadius: 40, padding: 9, boxShadow: '0 34px 64px -22px rgba(11,37,69,.55)', flex: 'none' } },
+      g('div', { style: { background: '#F3F6FA', borderRadius: 32, overflow: 'hidden', height: 524, display: 'flex', flexDirection: 'column' } },
+        g('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '13px 20px 4px', fontSize: 12, fontWeight: 700, color: '#0B2545' } },
+          g('span', null, '9:41'),
+          g('span', { style: { display: 'flex', gap: 4, alignItems: 'center', fontSize: 10, color: '#0B2545' } }, '\u25CF\u25CF\u25CF \u25CB')),
+        g('div', { style: { padding: '8px 16px 16px', display: 'flex', flexDirection: 'column', gap: 12 } },
+          g('div', { style: { display: 'flex', alignItems: 'center', gap: 9 } },
+            g('div', { style: { width: 30, height: 30, borderRadius: '50%', background: '#0B2545', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700 } }, 'A'),
+            g('div', null,
+              g('div', { style: { fontSize: 10.5, color: '#6B7A90' } }, 'Welcome back'),
+              g('div', { style: { fontSize: 14, fontWeight: 700, color: '#0B2545' } }, 'Alex Rivera'))),
+          g('div', { style: { background: 'linear-gradient(135deg,#164272,#0B2545)', borderRadius: 16, padding: '15px 16px', color: '#fff' } },
+            g('div', { style: { fontSize: 10.5, color: '#9DB4D4' } }, 'Available balance'),
+            g('div', { style: { display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 3 } },
+              g('div', { style: { fontSize: 27, fontWeight: 700, letterSpacing: '-.02em' } }, '$1,248.50'),
+              g('div', { style: { fontSize: 9.5, fontWeight: 700, color: '#08351F', background: '#5FD3A3', borderRadius: 20, padding: '2px 7px' } }, '+$50 today')),
+            g('div', { style: { display: 'flex', gap: 8, marginTop: 14 } },
+              g('div', { style: { flex: 1, textAlign: 'center', fontSize: 11, fontWeight: 700, background: '#E9C766', color: '#3A2B08', borderRadius: 9, padding: '9px 0' } }, 'Add funds'),
+              g('div', { style: { flex: 1, textAlign: 'center', fontSize: 11, fontWeight: 700, background: 'rgba(255,255,255,.13)', color: '#fff', borderRadius: 9, padding: '9px 0' } }, 'Cash out'))),
+          g('div', { style: { background: 'linear-gradient(135deg,#F0D488,#C9962C)', borderRadius: 14, padding: '13px 15px', color: '#3A2B08' } },
+            g('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
+              g('div', { style: { fontSize: 8.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', opacity: 0.7 } }, 'LotteryCards'),
+              g('div', { style: { fontSize: 8.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', opacity: 0.7 } }, 'Virtual')),
+            g('div', { style: { fontSize: 15, fontWeight: 700, marginTop: 8 } }, 'Mega Scratch'),
+            g('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 } },
+              g('span', { style: { fontSize: 12, fontFamily: 'monospace', letterSpacing: '.12em' } }, '\u2022\u2022\u2022\u2022 4821'),
+              g('span', { style: { fontSize: 11, fontWeight: 700 } }, 'Scratch \u2192'))),
+          g('div', null,
+            g('div', { style: { display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 2 } },
+              g('span', { style: { fontWeight: 700, color: '#0B2545' } }, 'Recent activity'),
+              g('span', { style: { color: '#1E5FBF', fontWeight: 600 } }, 'View all')),
+            this.actRow('\u2605', '#FDF3D6', '#C9962C', 'Mega Scratch', 'Instant win \u00b7 Today', '+$50.00', '#1F9D6F'),
+            this.actRow('L', '#EDF1F6', '#4A5A70', 'Lucky 7s \u2014 5-pack', 'Purchase \u00b7 Today', '\u2212$10.00', '#0B2545'),
+            this.actRow('\u2193', '#EDF1F6', '#4A5A70', 'Withdrawal', 'To \u2022\u2022\u2022\u2022 4417 \u00b7 Jun 8', '\u2212$40.00', '#0B2545'))
+        )
+      )
+    );
+  }
+
+  toggle1c() {
+    const g = React.createElement;
+    const agency = this.state.agencyView;
+    const tab = (active, label, onClick) => g('button', {
+      onClick,
+      style: {
+        flex: 1, border: 'none', cursor: 'pointer', fontFamily: 'Inter', fontSize: 13.5, fontWeight: 700,
+        padding: '10px 18px', borderRadius: 9, transition: 'all .18s ease',
+        background: active ? '#E9C766' : 'transparent', color: active ? '#3A2B08' : '#9DB0C9'
+      }
+    }, label);
+    return g('div', { style: { display: 'inline-flex', gap: 4, background: 'rgba(255,255,255,.07)', border: '1px solid rgba(255,255,255,.12)', borderRadius: 12, padding: 4 } },
+      tab(!agency, "I'm a winner", () => this.setState({ agencyView: false })),
+      tab(agency, 'For agencies', () => this.setState({ agencyView: true }))
+    );
+  }
+
+  renderVals() {
+    const agency = this.state.agencyView;
+    return {
+      iconNavA: this.icon(34), iconNavB: this.icon(34), iconNavC: this.icon(34),
+      iconTinyA: this.icon(30),
+      phoneA: this.phone(), phoneB: this.phone(), phoneC: this.phone(),
+      toggle1c: this.toggle1c(),
+      hero1cEyebrow: agency ? 'For state lotteries' : 'For winners',
+      hero1cTitle: agency ? 'Retire the check run.' : 'Win. Tap. Spend.',
+      hero1cSub: agency
+        ? 'Stop printing, mailing, and reconciling paper checks. Approved payouts flow through simple APIs and land on a virtual card in minutes — with clean records for every disbursement.'
+        : 'Your prize goes straight to a virtual card in your Apple or Google Wallet the moment your claim clears. No check, no waiting, no trip to an office.',
+      hero1cCta: agency ? 'Request a demo' : 'Winner login',
+      hero1cCta2: agency ? 'Talk to sales' : 'How it works',
+    };
+  }
+}
+</script>
+</body>
+</html>

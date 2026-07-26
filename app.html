@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:radial-gradient(130% 120% at 50% -10%, #14345B 0%, #0A1A30 55%, #071322 100%);font-family:'Inter',sans-serif;min-height:100vh}
+a{color:#7FC9F0;text-decoration:none}a:hover{color:#fff}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:22px;padding:34px 20px 50px;box-sizing:border-box;">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:14px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <svg viewBox="0 0 200 200" style="width:30px;height:30px;"><rect width="200" height="200" rx="44" fill="#E9C766"></rect><g transform="rotate(6 100 100)"><rect x="44" y="70" width="108" height="70" rx="13" fill="#0B2545"></rect><rect x="58" y="86" width="24" height="16" rx="3" fill="#fff" opacity=".9"></rect><rect x="58" y="112" width="52" height="6" rx="3" fill="#4A6690"></rect></g><path d="M150 46 L156 64 L174 70 L156 76 L150 94 L144 76 L126 70 L144 64 Z" fill="#fff"></path></svg>
+      <span style="font-family:'Space Grotesk';font-weight:700;font-size:19px;color:#fff;">LotteryCards — Winner App</span>
+    </div>
+    <div style="display:inline-flex;gap:4px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:4px;">
+      <div onClick="{{ setIos }}" style="font-size:13px;font-weight:700;padding:9px 22px;border-radius:9px;cursor:pointer;background:{{ iosBg }};color:{{ iosFg }};transition:all .18s;">iPhone</div>
+      <div onClick="{{ setAndroid }}" style="font-size:13px;font-weight:700;padding:9px 22px;border-radius:9px;cursor:pointer;background:{{ andBg }};color:{{ andFg }};transition:all .18s;">Android</div>
+    </div>
+  </div>
+  <sc-if value="{{ isIos }}" hint-placeholder-val="{{ true }}">
+    <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+      <dc-import name="App Screens" style="height:100%" hint-size="100%,100%"></dc-import>
+    </x-import>
+  </sc-if>
+  <sc-if value="{{ isAndroid }}" hint-placeholder-val="{{ false }}">
+    <x-import component-from-global-scope="AndroidDevice" from="./android-frame.jsx" hint-size="412px,892px">
+      <dc-import name="App Screens" style="height:100%" hint-size="100%,100%"></dc-import>
+    </x-import>
+  </sc-if>
+  <div style="font-size:12px;color:#5C708C;text-align:center;line-height:1.6;max-width:44ch;">Fully clickable: sign in (or use Face ID), verify the code, then explore Card, ATMs, Rewards, Support, wallet provisioning, and the cardholder agreement.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { platform: 'ios' };
+  renderVals() {
+    const ios = (this.props.platform ?? this.state.platform) === 'ios';
+    return {
+      isIos: ios, isAndroid: !ios,
+      setIos: () => this.setState({ platform: 'ios' }),
+      setAndroid: () => this.setState({ platform: 'android' }),
+      iosBg: ios ? '#E9C766' : 'transparent', iosFg: ios ? '#3A2B08' : '#9DB0C9',
+      andBg: !ios ? '#E9C766' : 'transparent', andFg: !ios ? '#3A2B08' : '#9DB0C9',
+    };
+  }
+}
+</script>
+</body>
+</html>

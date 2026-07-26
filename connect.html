@@ -236,10 +236,21 @@ class Component extends DCLogic {
   }
 
   async askAssistant(question) {
-    const history = this.state.chatMessages.map(m => ({ role: m.who === 'bot' ? 'assistant' : 'user', content: m.text }));
-    const system = "You are Kia, the LotteryCards support assistant on lotterycards.com's Connect page. You're from Hawaii — warm aloha spirit, friendly and laid-back, an occasional light Hawaiian touch (aloha, mahalo) without overdoing it. LotteryCards (by Haploos) pays lottery winners instantly: when a claim is approved at a lottery office, at a retailer (via encrypted QR code on the receipt), or online, the winnings land in seconds on a virtual prepaid Mastercard. The card is FDIC-insured, works in Apple/Google/Samsung Wallet, and can fund Venmo, Cash App, PayPal, and any app that accepts a debit card. It is reloadable for repeat wins, virtual-only (no physical card), and not a bank replacement. Support line: 1-888-641-0148 (Mon-Fri 7am-6pm PT), for current winners/cardholders only; everyone else should use the contact form on this page. Be warm, concise (2-4 sentences), and celebratory with winners. Never ask for or discuss full card numbers, SSNs, or account-specific details - route those to the phone line. If asked about agency sales or integrations, suggest the contact form on this page.";
+    // Kia's brain lives server-side now: this calls a small Cloudflare Worker that
+    // holds the real Anthropic API key and a locked-down system prompt (LotteryCards
+    // services, Haploos the company, and manually loading the card into a phone wallet
+    // - nothing else). window.claude.complete only exists inside Claude.ai Design's own
+    // canvas, so it never worked once this site was actually deployed - this replaces it.
+    const history = this.state.chatMessages.slice(-12).map(m => ({ role: m.who === 'bot' ? 'assistant' : 'user', content: m.text }));
     try {
-      return await window.claude.complete({ system, messages: history.concat([{ role: 'user', content: question }]) });
+      const res = await fetch('https://kia-chat.joshua-0a9.workers.dev/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history.concat([{ role: 'user', content: question }]) }),
+      });
+      if (!res.ok) throw new Error('Kia backend error: ' + res.status);
+      const data = await res.json();
+      return data.reply || "I'm having trouble connecting right now — please call the crew at 1-888-641-0148 or send a message with the form above.";
     } catch (e) {
       return "I'm having trouble connecting right now — please call the crew at 1-888-641-0148 or send a message with the form above.";
     }

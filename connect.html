@@ -203,7 +203,7 @@
 class Component extends DCLogic {
   state = {
     fName: '', fEmail: '', fMessage: '', fRole: 'winner', formSent: false, formError: '',
-    fWebsite: '', humanChecked: false, humanVerifying: false,
+    fWebsite: '', humanChecked: false, humanVerifying: false, formSubmitting: false,
     sentName: '', sentEmail: '',
     chatMessages: [{ who: 'bot', text: "Aloha! I'm Kia, the LotteryCards assistant. Ask me anything about claiming a prize, your virtual card, or adding it to your wallet." }],
     chatInput: '', chatThinking: false, chatVerified: false, chatVerifying: false,
@@ -297,15 +297,34 @@ class Component extends DCLogic {
         if (!name || !email || !msg) { this.setState({ formError: 'Please fill in your name, email, and message.' }); return; }
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { this.setState({ formError: 'That email doesn\u2019t look right \u2014 mind double-checking it?' }); return; }
         if (!s.humanChecked) { this.setState({ formError: 'Please tap "I\u2019m human" before sending.' }); return; }
-        // Wired to a mailto: link for now (no backend yet) - opens the visitor's own email client, addressed
-        // to Haploos, pre-filled with their info. Works without any server, but depends on the visitor having
-        // an email client configured. Production: replace with a POST to a real email relay or ticketing API
-        // (e.g. Zendesk), verifying the Turnstile token server-side, so it doesn't depend on the visitor's setup.
+        if (s.formSubmitting) return; // already in flight, don't double-submit
         const roleLabel = { winner: 'Winner', agency: 'Lottery agency', retail: 'Retailer' }[s.fRole] || s.fRole;
-        const mailSubject = encodeURIComponent(`LotteryCards contact form \u2014 ${roleLabel} \u2014 ${name}`);
-        const mailBody = encodeURIComponent(`From: ${name} <${email}>\nI am a: ${roleLabel}\n\nMessage:\n${msg}`);
-        window.location.href = `mailto:info@haploos.com?subject=${mailSubject}&body=${mailBody}`;
-        this.setState({ formSent: true, formError: '', sentName: name, sentEmail: email, fName: '', fEmail: '', fMessage: '', humanChecked: false });
+        // Wired to FormSubmit.co's AJAX endpoint (no backend of our own needed) - it emails the submission to
+        // info@haploos.com and returns JSON without leaving this page. First submission ever sent to that
+        // address triggers a one-time confirmation email FormSubmit needs clicked to activate delivery.
+        // Falls back to a mailto: link (opening the visitor's own email client) if the request fails.
+        this.setState({ formSubmitting: true, formError: '' });
+        fetch('https://formsubmit.co/ajax/info@haploos.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            name, email, role: roleLabel, message: msg,
+            _subject: `LotteryCards contact form \u2014 ${roleLabel} \u2014 ${name}`,
+            _replyto: email,
+            _template: 'table',
+            _captcha: 'false',
+          }),
+        }).then(res => {
+          if (!res.ok) throw new Error('FormSubmit request failed');
+          return res.json();
+        }).then(() => {
+          this.setState({ formSent: true, formSubmitting: false, formError: '', sentName: name, sentEmail: email, fName: '', fEmail: '', fMessage: '', humanChecked: false });
+        }).catch(() => {
+          const mailSubject = encodeURIComponent(`LotteryCards contact form \u2014 ${roleLabel} \u2014 ${name}`);
+          const mailBody = encodeURIComponent(`From: ${name} <${email}>\nI am a: ${roleLabel}\n\nMessage:\n${msg}`);
+          window.location.href = `mailto:info@haploos.com?subject=${mailSubject}&body=${mailBody}`;
+          this.setState({ formSent: true, formSubmitting: false, formError: '', sentName: name, sentEmail: email, fName: '', fEmail: '', fMessage: '', humanChecked: false });
+        });
       },
       resetForm: () => this.setState({ formSent: false }),
       chatMessages: s.chatMessages.map(m => ({

@@ -63,10 +63,10 @@
 <!-- THREE WAYS -->
 <section style="background:#F4F7FA;padding:72px 0;">
   <div class="lc-in lc-3col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
-    <a class="lc-card" href="tel:18005550000" style="display:block;background:#fff;border:1px solid #E6ECF3;border-radius:18px;padding:30px 26px;box-shadow:0 2px 14px rgba(11,37,69,.05);color:#0B2545;">
+    <a class="lc-card" href="tel:18886410148" style="display:block;background:#fff;border:1px solid #E6ECF3;border-radius:18px;padding:30px 26px;box-shadow:0 2px 14px rgba(11,37,69,.05);color:#0B2545;">
       <div style="width:52px;height:52px;border-radius:13px;background:#FBF3DC;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">{{ iconPhone }}</div>
       <div style="font-family:'Space Grotesk';font-weight:700;font-size:20px;margin-bottom:6px;">Call us</div>
-      <div style="font-family:'Space Grotesk';font-weight:700;font-size:22px;color:#1E5FBF;margin-bottom:8px;">1-800-555-0000</div>
+      <div style="font-family:'Space Grotesk';font-weight:700;font-size:22px;color:#1E5FBF;margin-bottom:8px;">1-888-641-0148</div>
       <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#C9962C;margin-bottom:8px;">Current winners only</div>
       <p style="font-size:14px;line-height:1.6;color:#4A5A70;margin:0;">Have a card already? Our support crew picks up Mon–Fri, 7am–6pm PT. Everyone else — use the form or chat below.</p>
     </a>
@@ -237,11 +237,11 @@ class Component extends DCLogic {
 
   async askAssistant(question) {
     const history = this.state.chatMessages.map(m => ({ role: m.who === 'bot' ? 'assistant' : 'user', content: m.text }));
-    const system = "You are Kia, the LotteryCards support assistant on lotterycards.com's Connect page. You're from Hawaii — warm aloha spirit, friendly and laid-back, an occasional light Hawaiian touch (aloha, mahalo) without overdoing it. LotteryCards (by Haploos) pays lottery winners instantly: when a claim is approved at a lottery office, at a retailer (via encrypted QR code on the receipt), or online, the winnings land in seconds on a virtual prepaid Mastercard. The card is FDIC-insured, works in Apple/Google/Samsung Wallet, and can fund Venmo, Cash App, PayPal, and any app that accepts a debit card. It is reloadable for repeat wins, virtual-only (no physical card), and not a bank replacement. Support line: 1-800-555-0000 (Mon-Fri 7am-6pm PT), for current winners/cardholders only; everyone else should use the contact form on this page. Be warm, concise (2-4 sentences), and celebratory with winners. Never ask for or discuss full card numbers, SSNs, or account-specific details - route those to the phone line. If asked about agency sales or integrations, suggest the contact form on this page.";
+    const system = "You are Kia, the LotteryCards support assistant on lotterycards.com's Connect page. You're from Hawaii — warm aloha spirit, friendly and laid-back, an occasional light Hawaiian touch (aloha, mahalo) without overdoing it. LotteryCards (by Haploos) pays lottery winners instantly: when a claim is approved at a lottery office, at a retailer (via encrypted QR code on the receipt), or online, the winnings land in seconds on a virtual prepaid Mastercard. The card is FDIC-insured, works in Apple/Google/Samsung Wallet, and can fund Venmo, Cash App, PayPal, and any app that accepts a debit card. It is reloadable for repeat wins, virtual-only (no physical card), and not a bank replacement. Support line: 1-888-641-0148 (Mon-Fri 7am-6pm PT), for current winners/cardholders only; everyone else should use the contact form on this page. Be warm, concise (2-4 sentences), and celebratory with winners. Never ask for or discuss full card numbers, SSNs, or account-specific details - route those to the phone line. If asked about agency sales or integrations, suggest the contact form on this page.";
     try {
       return await window.claude.complete({ system, messages: history.concat([{ role: 'user', content: question }]) });
     } catch (e) {
-      return "I'm having trouble connecting right now — please call the crew at 1-800-555-0000 or send a message with the form above.";
+      return "I'm having trouble connecting right now — please call the crew at 1-888-641-0148 or send a message with the form above.";
     }
   }
 
@@ -284,7 +284,7 @@ class Component extends DCLogic {
       fWebsite: s.fWebsite,
       setWebsite: e => this.setState({ fWebsite: e.target.value }),
       humanChecked: s.humanChecked, humanUnchecked: !s.humanChecked,
-      humanLabel: s.humanVerifying ? 'Verifying\u2026' : (s.humanChecked ? 'Verified human' : "I'm human"),
+      humanLabel: s.humanVerifying ? 'Verifying…' : (s.humanChecked ? 'Verified human' : "I'm human"),
       toggleHuman: () => {
         if (s.humanChecked || s.humanVerifying) { this.setState({ humanChecked: false, humanVerifying: false }); return; }
         this.setState({ humanVerifying: true });
@@ -295,8 +295,8 @@ class Component extends DCLogic {
         const name = s.fName.trim(), email = s.fEmail.trim(), msg = s.fMessage.trim();
         if (s.fWebsite) return; // honeypot filled -> silently drop (it's a bot)
         if (!name || !email || !msg) { this.setState({ formError: 'Please fill in your name, email, and message.' }); return; }
-        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { this.setState({ formError: 'That email doesn\u2019t look right \u2014 mind double-checking it?' }); return; }
-        if (!s.humanChecked) { this.setState({ formError: 'Please tap "I\u2019m human" before sending.' }); return; }
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { this.setState({ formError: 'That email doesn’t look right — mind double-checking it?' }); return; }
+        if (!s.humanChecked) { this.setState({ formError: 'Please tap "I’m human" before sending.' }); return; }
         if (s.formSubmitting) return; // already in flight, don't double-submit
         const roleLabel = { winner: 'Winner', agency: 'Lottery agency', retail: 'Retailer' }[s.fRole] || s.fRole;
         // Wired to FormSubmit.co's AJAX endpoint (no backend of our own needed) - it emails the submission to
@@ -309,7 +309,7 @@ class Component extends DCLogic {
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({
             name, email, role: roleLabel, message: msg,
-            _subject: `LotteryCards contact form \u2014 ${roleLabel} \u2014 ${name}`,
+            _subject: `LotteryCards contact form — ${roleLabel} — ${name}`,
             _replyto: email,
             _template: 'table',
             _captcha: 'false',
@@ -320,7 +320,7 @@ class Component extends DCLogic {
         }).then(() => {
           this.setState({ formSent: true, formSubmitting: false, formError: '', sentName: name, sentEmail: email, fName: '', fEmail: '', fMessage: '', humanChecked: false });
         }).catch(() => {
-          const mailSubject = encodeURIComponent(`LotteryCards contact form \u2014 ${roleLabel} \u2014 ${name}`);
+          const mailSubject = encodeURIComponent(`LotteryCards contact form — ${roleLabel} — ${name}`);
           const mailBody = encodeURIComponent(`From: ${name} <${email}>\nI am a: ${roleLabel}\n\nMessage:\n${msg}`);
           window.location.href = `mailto:info@haploos.com?subject=${mailSubject}&body=${mailBody}`;
           this.setState({ formSent: true, formSubmitting: false, formError: '', sentName: name, sentEmail: email, fName: '', fEmail: '', fMessage: '', humanChecked: false });
@@ -336,7 +336,7 @@ class Component extends DCLogic {
       })),
       chatThinking: s.chatThinking,
       chatLocked: !s.chatVerified, chatUnlocked: s.chatVerified,
-      chatVerifyLabel: s.chatVerifying ? 'Verifying\u2026' : "I'm human \u2014 let's chat",
+      chatVerifyLabel: s.chatVerifying ? 'Verifying…' : "I'm human — let's chat",
       verifyChatHuman: () => {
         if (s.chatVerifying || s.chatVerified) return;
         this.setState({ chatVerifying: true });

@@ -18,18 +18,13 @@
   .lc-in{max-width:1180px;margin:0 auto;padding:0 40px;}
   .lc-cta{transition:transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;cursor:pointer;}
   .lc-cta:hover{transform:translateY(-2px);}
-  .lc-state{transition:background .15s ease, color .15s ease, border .15s ease, transform .15s ease;cursor:pointer;}
-  .lc-state:hover{transform:translateY(-2px);}
-  .lc-input{width:100%;font-family:'Inter',sans-serif;font-size:15px;color:#0B2545;background:#fff;border:1px solid #D8DFE8;border-radius:11px;padding:13px 15px;outline:none;transition:border .15s ease, box-shadow .15s ease;}
-  .lc-input:focus{border-color:#1E5FBF;box-shadow:0 0 0 3px rgba(30,95,191,.14);}
+  .lc-tab{transition:background .15s ease, color .15s ease, border .15s ease;cursor:pointer;}
   @media(max-width:900px){
     .lc-in{padding:0 22px;}
-    .lc-stategrid{grid-template-columns:repeat(4,1fr)!important;}
     h1{font-size:40px!important;}
     h2{font-size:29px!important;}
   }
   @media(max-width:560px){
-    .lc-stategrid{grid-template-columns:repeat(3,1fr)!important;}
     .lc-nav-word{display:none!important;}
     .lc-nav-back{padding:8px 12px!important;font-size:12.5px!important;}
     .lc-nav-login{padding:9px 12px!important;font-size:12.5px!important;}
@@ -53,55 +48,37 @@
 
 <!-- HERO -->
 <section style="background:radial-gradient(130% 120% at 82% -10%, #14345B 0%, #0A1A30 55%, #071322 100%);color:#fff;padding:150px 0 56px;">
-  <div class="lc-in" style="text-align:center;max-width:62ch;margin:0 auto;">
+  <div class="lc-in" style="text-align:center;max-width:66ch;margin:0 auto;">
     <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#E9C766;margin-bottom:16px;">Legal</div>
     <h1 style="font-family:'Space Grotesk';font-weight:700;font-size:52px;line-height:1.02;letter-spacing:-.025em;margin:0 0 18px;">The fine print, in plain sight.</h1>
-    <p style="font-size:17px;line-height:1.6;color:#B8C6DB;margin:0;">Every LotteryCards program follows the rules of the state that runs it. Find your state below to view the cardholder agreement that applies to your card.</p>
+    <p style="font-size:17px;line-height:1.6;color:#B8C6DB;margin:0;">These are Haploos's national program agreements — the same terms apply to every LotteryCards cardholder, in every state, so there's no state to pick. Three documents govern your account: the Cardholder Agreement (from the bank that issues your Card), our Platform Terms of Service, and the E-SIGN Consent for electronic delivery.</p>
   </div>
 </section>
 
-<!-- CARDHOLDER AGREEMENTS -->
-<section style="background:#F4F7FA;padding:72px 0 96px;">
+<!-- DOCUMENTS -->
+<section style="background:#F4F7FA;padding:56px 0 96px;">
   <div class="lc-in">
-    <div style="max-width:64ch;margin:0 0 36px;">
-      <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1E5FBF;margin-bottom:14px;">Cardholder agreements</div>
-      <h2 style="font-family:'Space Grotesk';font-weight:700;font-size:38px;line-height:1.08;letter-spacing:-.02em;margin:0 0 14px;">Select your state.</h2>
-      <p style="font-size:16px;line-height:1.6;color:#4A5A70;margin:0;">Each state's lottery program has its own cardholder agreement. Pick the state where you claimed your prize — the agreement for that program appears below.</p>
-    </div>
-
-    <div style="max-width:420px;margin-bottom:22px;">
-      <input class="lc-input" value="{{ stateQuery }}" onChange="{{ setStateQuery }}" placeholder="Type your state…  e.g. Washington"></input>
-    </div>
-
-    <div class="lc-stategrid" style="display:grid;grid-template-columns:repeat(9,1fr);gap:10px;margin-bottom:40px;">
-      <sc-for list="{{ states }}" as="st" hint-placeholder-count="18">
-        <div class="lc-state" onClick="{{ st.pick }}" title="{{ st.name }}" style="position:relative;overflow:hidden;text-align:center;padding:13px 4px;border-radius:12px;border:1px solid {{ st.border }};background:{{ st.bg }};color:{{ st.color }};">
-          <img src="{{ st.flagUrl }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.16;pointer-events:none;"></img>
-          <div style="position:relative;font-family:'Space Grotesk';font-weight:700;font-size:17px;letter-spacing:.02em;">{{ st.code }}</div>
-          <div style="position:relative;font-size:9.5px;font-weight:600;opacity:.75;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ st.name }}</div>
-        </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+        <div class="lc-tab" onClick="{{ t.select }}" style="font-size:14.5px;font-weight:700;padding:12px 20px;border-radius:12px;border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.color }};">{{ t.label }}</div>
       </sc-for>
     </div>
 
-    <sc-if value="{{ noMatches }}" hint-placeholder-val="{{ false }}">
-      <p style="font-size:14.5px;color:#4A5A70;margin:0 0 40px;">No state matches "{{ stateQuery }}" — check the spelling, or clear the search to see all states.</p>
-    </sc-if>
-
-    <sc-if value="{{ hasSelection }}" hint-placeholder-val="{{ false }}">
-      <div id="agreement" style="background:#fff;border:1px solid #E6ECF3;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(11,37,69,.07);scroll-margin-top:92px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:24px 30px;background:#0B2545;color:#fff;">
-          <div style="display:flex;align-items:center;gap:14px;">
-            {{ iconDoc }}
-            <div>
-              <div style="font-family:'Space Grotesk';font-weight:700;font-size:20px;">{{ selName }} — Cardholder Agreement</div>
-              <div style="font-size:12.5px;color:#9DB4D4;margin-top:2px;">{{ selMeta }}</div>
-            </div>
+    <div style="background:#fff;border:1px solid #E6ECF3;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(11,37,69,.07);">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:24px 30px;background:#0B2545;color:#fff;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          {{ iconDoc }}
+          <div>
+            <div style="font-family:'Space Grotesk';font-weight:700;font-size:20px;">{{ activeTitle }}</div>
+            <div style="font-size:12.5px;color:#9DB4D4;margin-top:2px;">Last updated {{ activeUpdated }}</div>
           </div>
-          <div class="lc-cta" onClick="{{ printAgreement }}" style="flex:none;font-size:13.5px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,.28);padding:9px 16px;border-radius:9px;">Print / save PDF</div>
         </div>
-        <div style="max-height:480px;overflow-y:auto;padding:30px 34px;font-size:14.5px;line-height:1.75;color:#33415A;white-space:pre-wrap;">{{ selBody }}</div>
+        <div class="lc-cta" onClick="{{ printAgreement }}" style="flex:none;font-size:13.5px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,.28);padding:9px 16px;border-radius:9px;">Print / save PDF</div>
       </div>
-    </sc-if>
+      <div style="max-height:640px;overflow-y:auto;padding:32px 36px;font-size:14.5px;line-height:1.75;color:#33415A;white-space:pre-wrap;">{{ activeBody }}</div>
+    </div>
+
+    <p style="font-size:12.5px;color:#8A97A8;margin:20px 0 0;line-height:1.6;max-width:70ch;">Questions about any of these agreements? Email <a href="mailto:help@haploos.com">help@haploos.com</a> or <a href="mailto:help@lotterycards.com">help@lotterycards.com</a>, or use the <a href="connect.html">Connect page</a>.</p>
   </div>
 </section>
 
@@ -121,21 +98,452 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { stateQuery: '', selected: null };
+  state = { activeTab: 'cardholder' };
 
-  static STATES = [
-    ['AZ','Arizona'],['AR','Arkansas'],['CA','California'],['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],['DC','D.C.'],['FL','Florida'],
-    ['GA','Georgia'],['ID','Idaho'],['IL','Illinois'],['IN','Indiana'],['IA','Iowa'],['KS','Kansas'],['KY','Kentucky'],['LA','Louisiana'],['ME','Maine'],
-    ['MD','Maryland'],['MA','Massachusetts'],['MI','Michigan'],['MN','Minnesota'],['MS','Mississippi'],['MO','Missouri'],['MT','Montana'],['NE','Nebraska'],['NH','New Hampshire'],
-    ['NJ','New Jersey'],['NM','New Mexico'],['NY','New York'],['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],['OK','Oklahoma'],['OR','Oregon'],['PA','Pennsylvania'],['RI','Rhode Island'],
-    ['SC','South Carolina'],['SD','South Dakota'],['TN','Tennessee'],['TX','Texas'],['VT','Vermont'],['VA','Virginia'],['WA','Washington'],['WV','West Virginia'],['WI','Wisconsin'],['WY','Wyoming'],
-    ['PR','Puerto Rico'],['VI','U.S. Virgin Islands'],
-  ];
+  static CARDHOLDER = `Haploos Consumer Prepaid Cardholder Agreement
+(also operating as LotteryCards.com)
 
-  // Paste each state's real agreement here, keyed by state code. Any state without an entry shows the placeholder below.
-  static AGREEMENTS = {
-    // WA: { effective: 'January 1, 2026', body: `...full agreement text...` },
-  };
+This cardholder agreement ("Agreement") outlines the terms and conditions under which the Consumer Prepaid Mastercard® (the "Card") has been issued to you by GBank, Member FDIC (the "Bank" or "Issuer"), a Nevada state-chartered bank with its principal office in Las Vegas, Nevada. The Card is issued pursuant to a license from Mastercard International Incorporated. Mastercard is a registered trademark of Mastercard International Incorporated. The Card can be used everywhere Mastercard cards are accepted. The Card also operates on the NYCE network as a secondary network.
+
+Haploos Inc. ("Haploos") and/or its wholly owned subsidiary LotteryCards.com (or any other subsidiary of Haploos controlled and operated by Haploos) is the entity administering the Cards and can be reached at help@haploos.com or help@lotterycards.com. Haploos and LotteryCards.com may be referred to collectively or individually in this Agreement as the "Program Manager."
+
+The Card is a prepaid Mastercard designed to provide a convenient and secure way for participants to receive and spend funds (including lottery winnings, promotional funds, or demonstration funds where applicable). The Cards can be used for everyday purchases (including contactless / tap-to-pay at participating retailers), online transactions, mobile wallets, and bill payments anywhere Mastercard is accepted. The Card also operates on the NYCE network as a secondary network.
+
+The Card is virtual only. No physical plastic card will be issued. Because the Card is virtual, in-person use is limited to contactless / tap-to-pay terminals and retailers that accept contactless Mastercard payments. You may also use the Card for online purchases and in digital wallets.
+
+You may receive your funds through other means and you are not required to obtain this Card. Please contact the funding source or Program Manager for more information on alternate disbursement methods.
+
+THE CARD AND THE FUNDS LOADED ON THE CARD ARE FDIC INSURED.
+
+Funds on the Card are held in a pooled account at GBank, Member FDIC. Subject to applicable law and FDIC requirements (including registration of your Card so that the Bank's records identify you as the owner of the funds), your funds are eligible for pass-through FDIC insurance coverage up to the standard maximum deposit insurance amount ($250,000) in the event GBank fails. See fdic.gov/deposit/deposits/prepaid.html for details. The Card itself is not a deposit account and does not earn interest. Note: For Demonstration Cards with gifted funds (see Section A.9 below), the funds remain the property of Haploos and are subject to the special terms set forth in that section.
+
+IMPORTANT – PLEASE READ CAREFULLY. THIS AGREEMENT CONTAINS AN ARBITRATION PROVISION REQUIRING ALL CLAIMS TO BE RESOLVED BY BINDING ARBITRATION. THIS CONTRACT ALSO INCLUDES A WAIVER OF JURY TRIAL AND WAIVER OF RIGHTS TO PARTICIPATE IN A CLASS ACTION.
+
+A. USING THE SERVICES
+
+1. Definitions
+
+"Account" is your means of access to the Services offered by us. Your Account does not itself hold any funds. Instead, all funds are received and held by the Issuer (subject to the special ownership rules for Demonstration Cards in Section A.9).
+
+"Card," "Cards" and "Haploos Card" or "LotteryCards Card" mean the virtual Consumer Prepaid Mastercard card issued to you by the Issuer. The Card is a prepaid card. The Card is not a gift card, nor is it intended for gifting purposes (except as expressly provided for Demonstration Cards in Section A.9). The Card is also not designed for business use. Your account with the Issuer is not interest bearing. The Card is non-reloadable by you (except for loads by the designated funding source such as a lottery, program sponsor, or Haploos for demonstration purposes).
+
+"Demonstration Card" means a Card issued to lottery professionals or other authorized individuals solely for demonstration, training, testing, or promotional purposes, where the funds loaded onto the Card are gifted by Haploos (or its subsidiary) and remain the property of Haploos.
+
+"Services" consist of the Card and the Haploos / LotteryCards software and technology that provide you with the opportunity to apply for and use a Card in connection with your Account. The Services include the websites (including lottery.haploos.com and lotterycards.com), mobile app, and other platforms, as applicable. Haploos and LotteryCards.com are not banks and do not offer banking services as defined by the United States Department of the Treasury and applicable law. You must open an Account before accessing the Services.
+
+"We," "us," and "our" refers to the Issuer and its successors and assigns, and where the context requires, the Program Manager.
+
+"You" and "your" refer to the individual consumer using the Card.
+
+2. About the Program
+
+This Card will be linked to your Account. Purchases made with your Card will automatically be listed on your web portal or app dashboard.
+
+The Card is designed to make purchases for goods and services online or wherever Google Pay, Apple Pay, or other digital wallets that accept Mastercard are accepted.
+
+The Card is virtual only. No physical plastic card will be issued under any circumstances. Because the Card is virtual, in-person use is limited to contactless / tap-to-pay terminals and retailers that accept contactless Mastercard payments.
+
+The Card may support ATM withdrawals and cash-back at point of sale where those functions are enabled. Availability of ATM withdrawals and cash-back is limited and is controlled by participating retailers, ATM operators, and banks. Not all ATMs or retailers support these functions for virtual prepaid cards, and we do not guarantee that ATM or cash-back transactions will be available at any particular location or at any particular time.
+
+Haploos, LotteryCards.com, and/or its program partners may restrict transactions based on attributes such as, but not limited to, merchant category code, merchant ID, merchant name, and/or location.
+
+You can find your Card's expiration date and full card details (card number, expiration date, and CVV) by logging into lottery.haploos.com or lotterycards.com. You may add the Card to digital wallets (such as Apple Pay or Google Pay) or enter the card details at online retailers for purchases. Please note that digital wallets, online retailers, or other third-party platforms may charge their own separate fees for using the Card on their platforms; those fees are not charged by us and are not controlled by us.
+
+For help, account access, transaction history, or customer support, you may log in at lottery.haploos.com or lotterycards.com, or email help@haploos.com or help@lotterycards.com.
+
+3. Fees
+
+Card Purchase / Secondary Card Purchase Fee: N/A — not available for purchase.
+Monthly Fee: N/A — no monthly fee.
+Funding from a Bank Account: N/A — the Card is not reloadable by you. Funds are loaded only by the designated funding source (e.g., lottery, program sponsor, or Haploos for Demonstration Cards).
+Bill Payment (Regular or Expedited Delivery): N/A — bill pay is not available.
+ATM Withdrawal: $3.50 per withdrawal, charged by us. The ATM operator or bank may also charge their own fee. Availability is limited and controlled by participating ATM operators and banks; not guaranteed at any location.
+Bank Teller Withdrawal: N/A — not available with a virtual Card.
+Cash Back at Point of Sale: Varies — may be available at participating retailers that support cash-back on Mastercard prepaid cards. Not guaranteed at any location.
+Automated & Live Agent Phone Calls: $0 — no fee for customer service.
+Email and Text Message Alerts: $0 — standard text messaging rates from your carrier may apply.
+Mobile Application / Web Portal: $0 — standard data rates and carrier fees may apply.
+Mailed Periodic Paper Statement Fee: $10.00 for each request for a printed paper statement or other paper documentation. Electronic statements and history are free via the portal.
+ATM Balance Inquiry: Varies — may be available at participating ATMs; third-party fees may apply.
+Foreign Transaction Fee: 3% of the U.S. dollar amount of each transaction made in a foreign currency, processed outside the U.S., or conducted with a foreign merchant (including certain foreign websites). In addition to any currency conversion rate applied by Mastercard.
+ATM Withdrawal – International: $3.50 + the 3% Foreign Transaction Fee, plus any fee charged by the ATM operator or bank. Availability is limited and not guaranteed.
+ATM Decline – International: N/A — no fee charged by us for declined international ATM attempts.
+Inactivity Fee: $4.95/month, assessed each month after 90 consecutive days of inactivity. "Inactivity" means no revenue-generating cardholder activity — a purchase or spend transaction that posts to the Card, or a load of funds by the designated funding source. Balance inquiries, declined transactions, and administrative activity do not reset the inactivity period. For Demonstration Cards, Haploos may reclaim funds and close the Card at any time regardless of activity (see Section A.9).
+Replacement Card (Standard or Expedited): N/A — the Card is virtual only; no physical card is issued.
+Paper Check Fee: N/A — not available.
+
+Your funds are FDIC insured as described above (subject to the special ownership rules for Demonstration Cards in Section A.9). No overdraft/credit feature.
+
+Contact Haploos or LotteryCards by emailing help@haploos.com or help@lotterycards.com, or log in at lottery.haploos.com or lotterycards.com.
+
+For general information about prepaid accounts, visit cfpb.gov/prepaid. If you have a complaint about a prepaid account, call the Consumer Financial Protection Bureau at 1-855-411-2372 or visit cfpb.gov/complaint.
+
+For purposes of these disclosures, our business days are Monday through Friday, and we are closed for all banking holidays. Any reference to "days" found in this Agreement are calendar days unless indicated otherwise.
+
+Your purchases may be subject to additional fees from your Funding Account provider, ATM operators, or from individual merchants. These fees are not assessed or received by Haploos, LotteryCards, or the Issuer, and they are not responsible for them.
+
+If you make a Foreign Transaction, the amount will be converted to U.S. dollars by Mastercard using a rate selected from wholesale currency markets or a government-mandated rate on the applicable processing date. The conversion rate is independent of the 3% Foreign Transaction Fee we assess.
+
+4. Requirements to Use the Services
+
+In order to access the Services, you represent and warrant that: you are either a legal resident of the United States or a United States citizen; you are at least 18 years old; you have not been previously banned from using our Services, and that you have not previously violated our Terms of Service; and you have not been barred from receiving similar services under the laws of the United States.
+
+By accepting these terms, you also represent that you have the capacity to be bound by them; any information you provide accurately and truthfully represents your identity; you and all transactions initiated by you will comply with all applicable federal, state, and local laws, rules, and regulations; and you will not use the Services for any fraudulent undertaking or to interfere with the operation of the Services.
+
+5. Your Agreement on Card Use
+
+With each transaction you process through the Services you represent, warrant and agree that: the Card transaction represents a bona fide sale; the transaction accurately describes the goods and/or services obtained from the merchant; you will fulfill all of your obligations to the merchant and resolve any dispute directly with the merchant; you and the transaction comply with applicable law; and you will not use the Service in a fraudulent, disruptive, aggressive, manipulative, or otherwise inappropriate manner.
+
+6. Prohibited Uses
+
+You may not, nor may you permit any third party to: export the Services in violation of U.S. export restrictions; use or benefit from the Services via rental, lease, timesharing, service bureau or similar arrangement; use the Service with automated purchasing software; exploit new users, referral programs, or merchant promotions in violation of a merchant's terms; act as a payment facilitator or resell the Services to any third party; or use the Services to handle, process, or transmit funds for any third party.
+
+In addition, you may not use the Services for illegal activity or goods, paraphernalia usable for illegal activity, unauthorized multi-level marketing, rebate-based businesses, betting (including lottery tickets, sports gambling, casino gaming chips, off-track betting, and wagers at races), prepaid cards or checks, sales of money orders or foreign currency, wire transfers or money orders, or high-risk products and services including telemarketing sales.
+
+7. Authorized Users
+
+You are responsible for all authorized transactions initiated and fees incurred by use of your Card(s). If you permit another person to have access to a Card or Card number, this will be treated as if you authorized such use, and you will be liable for all transactions and fees incurred by those persons. You are wholly responsible for the use of each Card according to the terms of this Agreement.
+
+8. Funding
+
+Your Card will only be loaded with funds by the designated funding source (for example, a lottery, program sponsor, or Haploos for Demonstration Cards). You cannot add funds to your Card from any other source. When you opt in, the funding source will electronically transfer funds to your Card account maintained at GBank.
+
+9. Demonstration Cards and Gifted Funds
+
+This Section A.9 applies only to Demonstration Cards issued to lottery professionals or other authorized individuals for demonstration, training, testing, or promotional purposes where the funds loaded onto the Card are gifted by Haploos (or its subsidiary). This Section does NOT apply to funds you have won through a lottery gaming process or to any other funds that are legally yours.
+
+By accepting and using a Demonstration Card, you acknowledge and agree that: the funds are gifted by Haploos solely for demonstration, training, testing, or promotional purposes; the funds remain the sole property of Haploos (or its subsidiary) at all times, and you acquire no ownership interest in them; Haploos has the absolute right, at any time and for any reason (or no reason), to reclaim, reverse, or pull back any or all gifted funds, and to suspend, deactivate, or permanently turn off the Demonstration Card, without prior notice and without liability to you; you have no right to demand payment of, withdraw, or transfer the gifted funds except as expressly permitted for demonstration purposes while the Card remains active; and any attempt to treat gifted funds as your personal property, transfer them, or use them outside the intended demonstration purpose may result in immediate deactivation and reclamation. This Section does not apply to any funds you have legitimately won through a lottery gaming process or that otherwise belong to you under applicable law — those funds remain yours subject to the other terms of this Agreement.
+
+If you are issued a Demonstration Card, you will be notified that it is a Demonstration Card and that the funds are gifted. Acceptance or use of a Demonstration Card constitutes agreement to this Section A.9.
+
+B. OUR RIGHTS REGARDING THE SERVICES
+
+1. Modifications to this Agreement
+
+You agree that Haploos, LotteryCards.com, and the Issuer may modify this Agreement, or any other terms, policies, or guidelines, at any time in our sole discretion, except as required by applicable law. Any new agreement is effective immediately upon posting and updating the "Last Updated" date, except as otherwise required by law. Changes made for security purposes may be implemented without prior notice. Your continued use of the Services after changes are posted confirms your acceptance. If you do not agree to amended terms, you must stop using the Services.
+
+2. Limits on Your Use of the Services
+
+You cannot use the Cards in any way beyond their intended purpose. The maximum amount that can be spent using your Card is $5,000 per transaction. There is no limit on the number of transactions per day, subject to available funds and any security limits we impose. For security and fraud protection, we may impose limits on the dollar amount you can authorize in a transaction and over a period of time; if you exceed these limits we may decline the transaction and suspend your Card and Account.
+
+3. Investigations, Account Suspensions and Termination
+
+We reserve the right to investigate your use of the Service for compliance with this Agreement and applicable law, regulation, legal process, or government request. We may refuse to process any transaction that violates this Agreement, other agreements, network rules, or law. The Card is the property of the Issuer and must be surrendered upon demand. The Card is nontransferable and may be canceled, repossessed, or revoked at any time without prior notice, subject to applicable law (see also Section A.9 for Demonstration Cards). If we suspect you of violating any applicable terms, network rule, or law, we may suspend or terminate your access to the Services.
+
+4. Identity Verification
+
+To help the government fight the funding of terrorism and money laundering, federal law requires us to obtain, verify, and record information identifying each person who requests to use the Services. When you register, we may ask for your name, address, date of birth, Social Security number, and other identifying information, and you authorize us and our partners to make appropriate inquiries and use third-party services to verify your identity. If you don't provide this information or we cannot verify your identity, we can refuse, suspend, or terminate your use of the Services.
+
+C. HISTORY, REFUNDS, ERRORS, DISPUTES, AND REGISTRATION
+
+1. Payment History
+
+Each transaction is automatically recorded in your web portal or app transaction history; you should also receive a receipt from the merchant. You can view your balance and a 24-month history by logging into lottery.haploos.com or lotterycards.com. If your account is registered, you also have the right to obtain at least 24 months of written history by emailing help@haploos.com or help@lotterycards.com, at no charge unless you request physical delivery. Contact us immediately if you believe there is an error or unauthorized activity.
+
+2. Refunds and Returns
+
+If you're entitled to a refund for goods or services obtained with your Card, the return and refund is handled by the merchant. If the merchant credits your Card, the credit may not be immediately available — we have no control over when a merchant sends a credit transaction.
+
+3. Processing Errors, Disputes, and Unauthorized Transactions
+
+Email us at help@haploos.com or help@lotterycards.com as soon as you can if you think an error occurred. We must allow you to report an error until 60 days after the earlier of the date you electronically access your Account (if the error could be viewed in your electronic history) or the date we sent the first written history on which the error appeared. Tell us your name and last 4 of your account number, why you believe there is an error and the dollar amount, and approximately when it took place. If you tell us orally, we may require written confirmation within 10 business days. We will determine whether an error occurred within 10 business days (up to 45 days if we need more time, crediting your account within 10 business days for the disputed amount if your account is registered, and if we requested written confirmation and didn't receive it in 10 business days, we may not credit your account). For errors involving new accounts, point-of-sale, or foreign-initiated transactions, we may take up to 90 days to investigate (up to 20 business days to credit new accounts). We will tell you the results within 10 business days of completing our investigation, with a written explanation if we find no error.
+
+4. Your Liability for Unauthorized Transfers
+
+If you believe your Card has been lost or stolen, or a transaction or your Account credentials were used without your permission, tell us AT ONCE and freeze the relevant card(s) via "Your Cards" in the portal or app, and report it to help@haploos.com or help@lotterycards.com as soon as possible. If you tell us within two business days of learning of the loss or theft, you can lose no more than $50. If you do NOT tell us within two business days, and we can prove we could have stopped the unauthorized use had you told us, you could lose as much as $500. If your statement or transaction history shows transactions you didn't make, notify us at once — if you don't notify us within sixty (60) days after becoming aware of the transaction, you may not get back value lost after those 60 days if we can prove we could have stopped it had you notified us in time. Under Mastercard rules, you will not be liable for unauthorized transactions if you can demonstrate reasonable care in safeguarding your Card, provided you notify us within two (2) days after the statement showing the unauthorized transaction(s) was made available to you.
+
+5. Card Expiration; Replacement
+
+The Card is unusable after the "valid thru" date stated on the Card; you agree not to use it after that date. Because the Card is virtual only, no physical replacement is issued. If you need a new virtual Card, contact help@haploos.com or help@lotterycards.com or log in at lottery.haploos.com or lotterycards.com.
+
+6. Registration
+
+Register your Account as soon as possible. Until you register and we verify your identity, we are not required to research or resolve errors, and your funds may not be eligible for pass-through FDIC insurance. Register at lottery.haploos.com or lotterycards.com, or by emailing help@haploos.com or help@lotterycards.com. We will ask for identifying information (full name, address, date of birth, and Social Security Number or government-issued ID number) to verify your identity.
+
+D. OTHER TERMS
+
+1. Electronic Delivery of Notices and Communications
+
+The federal ESIGN Act allows us to provide required written information to you electronically instead, with your prior consent. By accepting this Agreement, you agree and consent to receive all communications, agreements, documents, notices, disclosures, alerts, and other information exclusively through electronic means — emails, text messages (SMS), web portal notifications, mobile app push notifications, and postings on our websites. Unless applicable law requires paper documentation, we will not issue paper copies; a $10.00 fee applies to each requested paper document. Electronic disclosures have the same effect as paper copies and are considered received within twenty-four (24) hours of posting or sending, unless we receive notice that delivery was unsuccessful. You may withdraw consent by emailing help@haploos.com or help@lotterycards.com, but withdrawing consent means you may no longer use our Service. You must keep your email address, mobile number, and other electronic contact information current with us.
+
+2. Telephone Communication
+
+We (or our program partners) may record and/or monitor telephone conversations with you. Giving us your mobile number authorizes us and our partners or service providers to use text messaging, artificial or prerecorded voice messages, and automatic dialing technology for informational and service calls (not telemarketing or sales). Message and data rates may apply. You may change these preferences by emailing help@haploos.com or help@lotterycards.com.
+
+3. Address or Name Changes
+
+You are responsible for notifying us of any change in your name, address, email, or phone number; requests may be subject to additional verification. We will attempt to communicate using only the most recent contact information you've provided.
+
+4. Confidentiality
+
+The Issuer and Program Manager may, subject to applicable law, share information regarding you, your Card, your Account, and your transaction activity as necessary to provide customer service, service the Card or Account, investigate and act on claims, and comply with applicable law. Information may be disclosed to third parties as permitted by law, our Privacy Policy, and the Issuer's privacy policy.
+
+5. No Warranty Regarding Goods or Services
+
+Haploos, LotteryCards.com, and the Issuer are not responsible for the quality, safety, legality, or any other aspect of goods or services you purchase with a Card. Disputes with a merchant must be handled directly with the merchant.
+
+6. No Warranty of Availability or Uninterrupted Use
+
+The Services may from time to time be inoperative, in which case you may be unable to use your Card or obtain information from it. Notify us immediately of any problems. The Issuer, Program Manager, and their affiliates are not responsible for any interruption of service. ATM and cash-back availability is also subject to the limitations described in Section A.2.
+
+7. Unclaimed Property
+
+If your Account becomes inactive, applicable law may require us to report the funds as unclaimed property. We may try to locate you at the address in our records; if we cannot, we may be required to deliver the funds to the applicable state as unclaimed property. This does not limit Haploos's rights under Section A.9 for Demonstration Cards.
+
+8. Miscellaneous
+
+Assignment and Rebranding: We may assign this Agreement without your consent, to the extent permitted by law; you may not assign or transfer your Card or this Agreement without our prior written consent. Haploos may assign, transfer, or delegate this Agreement to any subsidiary it controls and operates, including LotteryCards.com, which may become Program Manager and rebrand the Card, Services, portal, app, and related materials under its own name without requiring your further consent; the Issuer remains the issuer of the Card.
+
+Severability: This Agreement is enforced to the fullest extent permitted by law; any invalid provision will be modified by a court to best accomplish its original objective, with the remaining provisions staying in effect.
+
+Governing Law: This Agreement is governed by the law of the State of Nevada (where GBank is located), except to the extent governed by federal law.
+
+Language: This Agreement was drafted in English; the English-language version controls in the event of any translation conflict.
+
+Section Headings: Provided for convenience only and do not govern interpretation.
+
+Cancellation: The Issuer or Program Manager may cancel or suspend the Card or this Agreement at any time. You may cancel by contacting help@haploos.com or help@lotterycards.com. Termination does not affect rights or obligations arising before termination; upon cancellation, closure, or termination, you authorize us to return any remaining available funds in accordance with applicable law and program rules (subject to the special rules for Demonstration Cards in Section A.9).
+
+Entire Agreement: This Agreement comprises the entire agreement between you and us regarding its subject matter and supersedes all prior proposals, understandings, and contemporaneous communications.
+
+9. Indemnification
+
+You agree to defend, indemnify, and hold harmless Haploos, LotteryCards.com, the Issuer, our program partners, and their affiliated companies and personnel against any claims, suits, damages, costs, fines, penalties, liabilities, and expenses (including reasonable attorneys' fees) arising from your violation of this Agreement, applicable law, third-party rights, or your fraud or willful misconduct. We may assume exclusive defense and control of any indemnified matter, and you will cooperate in asserting available defenses.
+
+10. Limitation of Liability
+
+Except as otherwise expressly provided in this Agreement or required by applicable law, none of the Issuer, Haploos, LotteryCards.com, our program partners, and their affiliates and personnel are responsible or liable for any indirect, incidental, consequential, special, exemplary, or punitive damages arising out of or relating to the Cards, the Services, any products or services purchased using a Card, or this Agreement. To the maximum extent permitted by law, total liability is limited to the greater of (a) the fees earned by the Program Manager in connection with your use of the Services during the one-month period immediately preceding the event giving rise to the claim, or (b) $10.
+
+11. Survival
+
+Provisions related to indemnification, limitation of liability, arbitration, assignment, Demonstration Cards (Section A.9), and any other provisions necessary to give effect to a party's rights survive termination of the Agreement, bankruptcy of any party, transfer or assignment of the Card, or expiration of the Card.
+
+E. WAIVER OF CLASS ACTION AND JURY TRIAL RIGHTS
+
+1. Waiver of Right to Class Actions
+
+NO CLASS ACTIONS. To the fullest extent permitted by law, you agree and acknowledge that you are waiving your right to initiate or participate in any class action or class arbitration related to this Agreement.
+
+2. Waiver of Right to Trial by Jury
+
+You and we (including both the Program Manager and Issuer) acknowledge that the right to trial by jury is a constitutional right but may be waived in certain circumstances. To the fullest extent permitted by law, you and we knowingly and voluntarily waive any right to trial by jury in the event of litigation arising out of or related to this Agreement. This jury trial waiver does not modify the arbitration clause below, which contains its own separate jury trial waiver.
+
+F. ARBITRATION
+
+1. Agreement to Arbitrate
+
+You, the Program Manager, and the Issuer agree to arbitrate any and all disputes arising from your attempted or actual use of the Card or Services ("Dispute") before a neutral arbitrator who has the power to award the same damages and relief that a court can. "Issuer" and "Program Manager" include any program partners, affiliates, subsidiaries (including LotteryCards.com), and parties with whom we contract to offer the Cards.
+
+ANY ARBITRATION WILL ONLY BE ON AN INDIVIDUAL BASIS; CLASS ARBITRATIONS, CLASS ACTIONS, PRIVATE ATTORNEY GENERAL ACTIONS, REPRESENTATIVE ACTIONS, AND CONSOLIDATION WITH OTHER ARBITRATIONS ARE NOT PERMITTED. YOU WAIVE ANY RIGHT TO A JURY AND ANY RIGHT TO PARTICIPATE IN A CLASS ACTION AGAINST THE PROGRAM MANAGER AND THE ISSUER.
+
+If any section of these arbitration provisions is found unenforceable, it will be severed and the remaining terms enforced (never as a class or representative arbitration).
+
+ARBITRATION OF YOUR CLAIM IS MANDATORY AND BINDING. Neither party may litigate that claim through a court, or have a jury trial, or engage in discovery except as provided in the AAA Code of Procedure. This agreement to arbitrate is made pursuant to a transaction involving interstate commerce and is governed by the Federal Arbitration Act (9 U.S.C. 1-16), not any state arbitration law.
+
+2. Limitation on Time to Initiate a Dispute
+
+Any action or proceeding relating to a Dispute must commence within 90 days after the cause of action accrues.
+
+3. Process for Arbitration of Disputes
+
+All disputes shall be finally and exclusively resolved by binding individual arbitration conducted by the American Arbitration Association ("AAA") under its Consumer Arbitration Rules, in your state of residence at a location reasonably convenient for both parties. Contact AAA at 335 Madison Avenue, New York, NY 10017, or www.adr.org, for procedures or to file a claim. The Program Manager will pay the initial filing fee. If you are a consumer bringing a claim relating to personal, household, or family use, the arbitration hearing will occur in the county where you reside; otherwise, in Clark County, Nevada, or another mutually agreeable location. Your rights will be determined by a neutral arbitrator, not a judge or jury; arbitration procedures may be simpler and more limited than court rules, and arbitrators' decisions are enforceable as court orders subject to very limited court review. All determinations as to scope, interpretation, enforceability, and validity of this Agreement are made finally and exclusively by the arbitrator; judgment on the award may be entered in any court having jurisdiction.
+
+IF YOU DO NOT AGREE TO THESE ARBITRATION PROVISIONS, DO NOT ACTIVATE OR USE THE CARD, OR CANCEL IT IF ALREADY ACTIVATED, BY CONTACTING help@haploos.com OR help@lotterycards.com, OR BY LOGGING IN AT lottery.haploos.com OR lotterycards.com.
+
+This Card is issued by GBank, Member FDIC, pursuant to a license from Mastercard International Incorporated. Mastercard is a registered trademark, and the circles design is a trademark, of Mastercard International Incorporated.
+
+Program Manager: Haploos Inc. and/or its subsidiary LotteryCards.com
+Contact & Login: help@haploos.com | help@lotterycards.com | lottery.haploos.com | lotterycards.com`;
+
+  static TOS = `Platform Terms of Service
+Haploos Inc. (including LotteryCards.com)
+
+These Platform Terms of Service ("Terms") form a legal agreement between you, the end user ("You" or "Cardholder") and Haploos Inc. ("Haploos," "we," "us," or "our"), including its wholly owned subsidiary LotteryCards.com (or any other subsidiary of Haploos controlled and operated by Haploos), that applies each time you use or access the website(s), web portal(s), and/or mobile application(s) made available by Haploos for management of your prepaid card account, together with their associated content, features, tools, and materials (collectively, the "Platform").
+
+You should read carefully the following terms and conditions as they govern your use of the Platform and its functionality.
+
+In particular, these Terms contain an arbitration provision that waives your right to a court hearing and/or a jury trial and a class action waiver that waives your right to participate in any class action lawsuit to enforce this contract.
+
+If you do not agree with these Terms, you are not granted permission to access or otherwise use the Platform and are instructed to exit, uninstall, and/or cease all use of the Platform immediately.
+
+1. Relationship to Cardholder Agreement and Other Agreements
+
+These Terms govern solely your access to and use of the Platform (the websites, portals, and mobile applications operated by Haploos/LotteryCards.com). The virtual Consumer Prepaid Mastercard® issued to you (the "Card"), the funds loaded on the Card, and your relationship with the Issuer are governed exclusively by the separate Haploos Consumer Prepaid Cardholder Agreement (the "Cardholder Agreement") between you and GBank, Member FDIC (the "Issuer"), as administered by Haploos as Program Manager. In the event of any conflict between these Terms and the Cardholder Agreement with respect to the Card, Card Account, funds, fees, or Issuer relationship, the Cardholder Agreement shall control. With respect to access to and use of the Platform itself, these Terms shall control.
+
+By accessing or using the Platform, you also acknowledge and agree that you have received, read, and agree to be bound by: (a) the Cardholder Agreement; (b) the Haploos/LotteryCards Privacy Policy; and (c) the E-SIGN Consent Agreement. If you have not agreed to those documents, you may not use the Platform or the Card.
+
+Haploos is the Program Manager of the Card program and is not a bank, not the Issuer of the Card, and does not hold your funds. The Card and funds are issued and held by GBank, Member FDIC, and are subject to the Cardholder Agreement and applicable banking and consumer protection laws.
+
+2. License Grant and Restrictions
+
+These Terms provide you a personal, revocable, limited, non-exclusive, non-sublicensable, and nontransferable license to use and access the Platform solely for your personal use in connection with managing your Card Account, conditioned on your continued compliance with these Terms, the Cardholder Agreement, and all applicable laws.
+
+When using the Platform under this license, you shall not directly or indirectly: use the Platform to create a service, software, or documentation performing substantially the same functionality; disassemble, decompile, reverse-engineer, or otherwise attempt to discover source code, algorithms, or trade secrets; encumber, sublicense, transfer, distribute, rent, lease, time-share, or use the Platform in any service bureau or similar commercial arrangement; adapt, combine, create derivative works of, or otherwise modify the Platform; disable, circumvent, or undermine any security device, mechanism, protocol, or procedure; use or access the Platform for any unlawful, fraudulent, deceptive, malicious, or harmful purpose, including violating the Cardholder Agreement, anti-money laundering laws, sanctions laws, or other applicable law; remove, obscure, deface, or alter proprietary rights notices; use the Platform in a manner that could damage, disable, overburden, or impair it or interfere with others' authorized use; engage in data mining, deep-linking, page-scraping, or use bots, spiders, or similar tools; probe, scan, or test the Platform's vulnerability, including stress testing or penetration testing; access or attempt to access another user's account or Card information without authorization; or use the Platform or information from it to engage in fraud, identity theft, or unauthorized transactions.
+
+3. User Obligations and Eligibility
+
+You represent that you are at least eighteen (18) years of age or the legal age of majority in your jurisdiction, whichever is greater, and will at all times provide true, accurate, current, and complete information when submitting information through the Platform. You are responsible for compliance with all applicable laws, rules, and regulations regarding your use of the Platform. The Platform is not intended for use by anyone under the age of thirteen (13), and Haploos does not knowingly collect personal information from such individuals. If you are under 18, you may not use the Platform. You further represent that you are not located in a country subject to a U.S. government embargo or sanction and are not listed on any U.S. government list of prohibited or restricted parties, and that your use of the Platform and Card complies with all applicable sanctions and export control laws.
+
+4. Your Account
+
+You may be required to register an account to use the Platform or certain features. Each registration is for a single user only, unless otherwise expressly agreed by Haploos. Registration may require access credentials such as a username and password, multi-factor authentication, or other access requirements designated by Haploos. You agree to treat your access credentials as confidential and not disclose them to any third party without Haploos's express prior written consent. You must immediately notify Haploos of any suspected loss, theft, or unauthorized use of your login credentials or unauthorized access to your Card Account via the Platform. Haploos will not be liable for any loss or damage arising from your failure to comply with these obligations. Information you submit for registration must be complete, true, accurate, and current, and you must promptly update it. Haploos reserves the right to suspend, terminate, or discontinue your account or pending registration if it has reasonable grounds to suspect submitted information is untrue, inaccurate, not current, or incomplete, or that your registration, account, or use violates applicable law, these Terms, or the Cardholder Agreement. You are solely responsible for all activity that occurs under your account, whether or not authorized by you. Haploos may, but is not obligated to, monitor Platform activity for security, compliance, and fraud-prevention purposes.
+
+5. Electronic Communications
+
+Haploos may send emails, push notifications, SMS/text messages (where consented), or other electronic messages concerning your use of the Platform and Card Account. You consent to receive such communications, and you agree they constitute valid legal notices satisfying any requirement that notices be in writing. Your consent to electronic communications is further governed by the separate E-SIGN Consent Agreement. You are responsible for maintaining a valid email address and a device capable of receiving such communications.
+
+6. Links to Third-Party Sites and Services; Digital Wallets
+
+Certain services, features, or components of the Platform are delivered by or interoperate with third-party providers, including digital wallet providers (Apple Pay, Google Pay, and similar), app stores (Apple App Store, Google Play), payment networks, and identity verification or KYC providers. By using any product, service, or functionality originating from the Platform, you acknowledge and consent that Haploos may share information and data with the applicable third-party provider as required to enable and facilitate the requested product, service, or functionality, subject to the Privacy Policy.
+
+Haploos expressly disclaims responsibility and liability for any third-party materials, programs, applications, tools, products, and services set forth, described on, or accessed through the Platform, and you agree Haploos is not responsible for any loss or damage from dealings between you and a third party, whether or not facilitated by the Platform. Your use of digital wallets and app stores is also subject to their separate terms and conditions. Additional notices, terms, and conditions may apply to particular products, services, materials, or features, including third-party application terms; these Terms operate in addition to (and do not alter or amend) any such third-party terms of use.
+
+7. Data Privacy
+
+Operation of certain Platform features may require the provision, use, and dissemination of personally identifiable information, including personal contact information, government identification information (for KYC/CIP), and Card Account activity. Refer to the Haploos/LotteryCards Privacy Policy (available on the Platform, at lotterycards.com/privacy, or upon request) for a summary of Haploos's policies and practices regarding personally identifiable information. By using the Platform, you consent to the collection, use, and sharing of information as described in the Privacy Policy.
+
+8. Proprietary Rights
+
+All materials and information included as part of the Platform — content, text, graphics, logos, images, the compilation thereof, and any software or other proprietary materials — are the property of Haploos or its third-party licensors and are protected by copyright and other intellectual property laws. Haploos reserves all rights in the Platform not expressly granted herein. You acquire no ownership rights in any part of the Platform under these Terms or through your use of it.
+
+9. Mobile Application License and Usage
+
+If you access the Platform via a downloadable mobile application (the "App"), Haploos grants you a limited, non-exclusive, non-transferable, revocable license to download, install, and use the App on a mobile device you own or control, solely for your personal use in managing your Card Account and solely as permitted by the applicable app store terms (Apple App Store or Google Play). Your mobile carrier's normal messaging, data, and other rates and fees apply. Downloading, installing, or using the App may be prohibited or restricted by your mobile carrier, and not all functionality works with all carriers, devices, or locations; you are solely responsible for checking availability, applicable restrictions, and any associated fees. These Terms are between you and Haploos only, not with Apple Inc., Google LLC, or any other app store provider; Haploos, not the app store provider, is solely responsible for the App and its content. The app store provider has no obligation to furnish maintenance or support, and to the maximum extent permitted by law, has no warranty obligation with respect to the App; in the event of a warranty failure, the app store provider's obligation (if any) is limited to refunding the App's purchase price. You represent that you are not located in a country subject to U.S. government embargo, or designated a "terrorist supporting" country, and are not listed on any U.S. government list of prohibited or restricted parties.
+
+10. Feedback
+
+"Feedback" means any feedback, recommendations, enhancement requests, suggestions, testimonials, endorsements, or improvement ideas you voluntarily communicate to Haploos regarding the Platform or its products and services. You grant Haploos a perpetual, irrevocable, fully transferable, freely sublicensable, royalty-free, worldwide license to make, have made, use, import, offer for sale, sell, reproduce, distribute, modify, adapt, prepare derivative works of, display, perform, and otherwise exploit such Feedback for any purpose, surviving termination of these Terms.
+
+11. Indemnification
+
+You agree to indemnify, defend, and hold harmless Haploos and its officers, directors, employees, agents, successors, and assigns from losses, costs, liabilities, damages, and expenses (including reasonable attorney's fees) relating to or arising from your violation of these Terms, the Cardholder Agreement, or any other agreement with Haploos or the Issuer; any personal or proprietary rights of a third party; any applicable laws, rules, or regulations; or your use or misuse of the Platform or Card. Haploos may, at its own cost, assume exclusive defense and control of any indemnified matter, and you will fully cooperate in asserting available defenses.
+
+12. Disclaimers and Excluded Liability
+
+Haploos does not represent or warrant that the Platform will operate error-free or on an uninterrupted basis. The Platform is provided "as is" and "as available," and Haploos disclaims all warranties, express or implied, including implied warranties of title, non-infringement, merchantability, or fitness for a particular purpose, to the maximum extent permitted by law. Haploos makes no representation, warranty, or guarantee regarding the quality, accuracy, effectiveness, legality, reliability, or timeliness of any services, content, or information made available (including any balance, transaction history, or account information displayed on the Platform, which is provided for convenience only and is subject to the Cardholder Agreement and the Issuer's records). Your use of and access to the Platform is entirely at your own risk.
+
+In no event shall Haploos be liable, regardless of the form of claim or action, for any loss or inaccuracy of data, loss or interruption of use, cost of procuring substitute technology, goods, or services, or any indirect, punitive, incidental, reliance, special, exemplary, or consequential damages, including damages for loss of business, revenues, profits, and/or goodwill, even if such damages were reasonably foreseeable or Haploos was advised of their possibility.
+
+To the maximum extent permitted by law, Haploos's total aggregate liability arising out of or related to these Terms or the Platform shall not exceed the greater of (a) one hundred U.S. dollars ($100) or (b) the total fees (if any) paid by you to Haploos for access to the Platform during the twelve (12) months preceding the claim. Certain jurisdictions may not permit some or all of these disclaimers; where applicable, they apply to the maximum extent permitted under applicable law.
+
+13. No Professional Advice
+
+Content and information on the Platform (including reports, graphics, statistics, balances, transaction histories, methodologies, illustrations, or practices) cannot replace or substitute for qualified professional services and should not be treated as professional financial, tax, legal, or other advice. You are solely responsible and accountable for your decisions, actions, and results regarding use of your Card and funds. All terms governing the Card, fees, and your rights as a cardholder are set forth exclusively in the Cardholder Agreement.
+
+14. Term, Termination, and Suspension
+
+These Terms take effect (or re-take effect) the moment you first access, use, install, and/or log into the Platform. Haploos reserves the right at any time and on any grounds — including reasonable belief of fraudulent or unlawful activity, or violation of these Terms or the Cardholder Agreement — to deny or suspend your access to the Platform to protect its name, goodwill, business, rights, security, stability, or the rights of others. These Terms terminate automatically if you fail to comply with any provision, subject to survival of certain provisions. You may terminate at any time by ceasing to use the Platform, but re-access or renewed use reapplies these Terms. Upon termination, all licenses granted by Haploos terminate immediately and you must cease all use of the Platform. Provisions concerning proprietary rights, Feedback, disclaimers, limitations of liability, waiver and severability, entire agreement, indemnification, arbitration, class action waiver, injunctive relief, and governing law survive termination.
+
+15. Arbitration
+
+Any dispute the parties cannot resolve, arising out of or concerning these Terms, whether in contract, tort, or otherwise at law or equity, shall be resolved exclusively through final and binding arbitration under the Federal Arbitration Act, conducted by a single neutral arbitrator and administered under the AAA Commercial Arbitration Rules (or, for consumer claims relating to personal, household, or family use, the AAA Consumer Arbitration Rules). The exclusive site of arbitration shall be New York, New York (or, for consumer claims, the county of your residence or another location reasonably convenient for both parties). The arbitrator's award is final and judgment may be entered in any court having jurisdiction; the prevailing party may recover costs and reasonable attorney's fees to the extent permitted by law and applicable AAA rules. This provision survives termination of these Terms. Haploos may, however, bring a claim for injunctive or other equitable relief against your violation of these Terms in any court of competent jurisdiction without first engaging in arbitration. Disputes arising under or relating to the Card, Card Account, funds, or the Cardholder Agreement are governed by that Agreement's dispute-resolution provisions, not this Section, except to the extent they also involve Platform access issues independent of the Card relationship.
+
+16. Class Action Waiver
+
+By using the Platform and agreeing to these Terms, you willingly, expressly, and knowingly waive all right to bring or participate in any class-action lawsuit, class-wide arbitration, or private attorney-general action brought under or in connection with these Terms or your use of the Platform. You may not bring any claim, suit, or proceeding to enforce these Terms as a member of any class or as part of any similar collective or consolidated action.
+
+17. Governing Law
+
+These Terms are governed by the laws of the State of New York, without reference to its conflict-of-laws principles. Subject to the arbitration requirements above, any claim, suit, or proceeding between you and Haploos under these Terms shall be adjudicated exclusively in the state and federal courts sitting in New York, New York, and you expressly submit to that jurisdiction. The Platform may not be used or accessed from any jurisdiction that does not give effect to all provisions of these Terms, including this paragraph.
+
+18. No Joint Venture, Employment, or Similar Relationship
+
+Nothing herein or in your use of the Platform creates any joint venture, partnership, employment, or agency relationship between you and Haploos. Haploos acts solely as Program Manager with respect to the Card program and as operator of the Platform.
+
+19. Security and Compliance
+
+Haploos reserves the right to view, monitor, and record your activity on the Platform without notice, to the extent permitted by law, for security, fraud prevention, compliance, and Platform improvement purposes. Nothing herein restricts Haploos's ability to comply with governmental, court, and law enforcement requests involving your use of the Platform or information gathered with respect to such use.
+
+20. Export Controls and Sanctions
+
+You represent and warrant that you are not located in a country subject to a U.S. government embargo or sanction, and are not listed on any U.S. government list of prohibited or restricted parties. You agree to comply with all applicable sanctions and export control laws and are solely responsible for ensuring the Platform is used, disclosed, and/or accessed only in accordance with them.
+
+21. Severability and Waiver
+
+If any part of these Terms is determined invalid or unenforceable, it will be deemed reformed or severed to the minimum extent required, with the remainder continuing in full force and effect. Haploos's failure to insist on strict performance will not operate as a waiver of any subsequent default, nor will any waiver of one right be deemed a waiver of any other right or of the same right at another time.
+
+22. Injunctive Relief
+
+You acknowledge that any breach of these Terms would cause Haploos irreparable injury not readily quantifiable as money damages, such that Haploos would not have an adequate remedy at law. You agree Haploos is entitled, in addition to other remedies, to seek and be awarded an injunction or other equitable relief restraining any such breach, without the necessity of posting bond or other security.
+
+23. Changes to Terms
+
+Haploos reserves the right to change these Terms by posting a revised version on the Platform or by mailing/emailing notice. Haploos may add, modify, or delete any aspect of the Platform without obligation to add any upgrade or enhancement. Your continued use of the Platform after an announced change is deemed conclusive acceptance of that change; please review these Terms periodically. Material changes are effective upon the later of the posting date or the effective date stated in the notice.
+
+24. Entire Agreement; Contact
+
+These Terms, together with the Privacy Policy, E-SIGN Consent, and (to the extent applicable) the Cardholder Agreement, constitute the entire agreement between you and Haploos regarding the Platform, superseding all prior or contemporaneous communications and proposals.
+
+Email: help@haploos.com or help@lotterycards.com
+Websites / Portals: lotterycards.com | lottery.haploos.com
+Program Manager: Haploos Inc. and/or its subsidiary LotteryCards.com
+
+By accessing or using the Platform, you acknowledge that you have read these Terms, understand them, and agree to be bound by them.`;
+
+  static ESIGN = `E-SIGN Consent Agreement
+Electronic Signatures in Global and National Commerce Act (E-SIGN) Disclosure and Consent
+
+This Electronic Communication Disclosure and Consent ("E-SIGN Consent") applies to all communications, disclosures, notices, statements, agreements, records, and other information that we are legally required or permitted to provide to you in writing in connection with your Account, Card, and any related products and services (collectively, "Communications"). This E-SIGN Consent supplements and is to be construed in accordance with the terms of the Haploos Consumer Prepaid Cardholder Agreement (the "Agreement") and any other applicable terms of service you received from Haploos Inc. or LotteryCards.com.
+
+"We," "us," and "our" refer to Haploos Inc., its wholly owned subsidiary LotteryCards.com, and their affiliates, successors, and assigns (collectively, the "Program Manager"). "You" and "your" mean the account holder / cardholder. "Account" means the prepaid card account associated with your Consumer Prepaid Mastercard® issued by GBank, Member FDIC (the "Issuer") and administered by the Program Manager. "Card" means the virtual Consumer Prepaid Mastercard linked to your Account.
+
+PLEASE READ THIS E-SIGN CONSENT CAREFULLY AND KEEP A COPY FOR YOUR RECORDS. Your affirmative consent is required before you may open or use an Account or Card. If you are unable or unwilling to provide consent, do not enroll for or activate an Account.
+
+1. Consent for Electronic Signatures, Records, and Disclosures
+
+By clicking "I Agree," checking the consent box, electronically signing, or otherwise affirmatively indicating your acceptance of this E-SIGN Consent (or by accepting the Agreement that incorporates this consent), you: affirmatively consent to the use of electronic signatures, electronic records, and electronic delivery of all Communications in lieu of paper; confirm that you have the hardware, software, and internet access necessary to receive, access, view, and retain electronic Communications in the formats we use; acknowledge that you have read and understand this E-SIGN Consent; and demonstrate, by successfully accessing and interacting with this electronic document and the enrollment process, that you can access information in the electronic form we will use to provide Communications.
+
+Your consent is required before you can begin using your Account or Card. Once activated, you may withdraw consent as described in Section 10, subject to the consequences stated therein.
+
+2. Scope of Communications to Be Provided Electronically
+
+This is an umbrella consent applying to all categories of Communications that may be provided during our relationship with you, not limited to a single transaction. You agree we may provide any Communications in electronic format and may discontinue sending paper Communications, unless and until you withdraw consent as described below. Your consent includes, but is not limited to: all legal and regulatory disclosures associated with your Account, Card, and related products and services; the Cardholder Agreement, Fee Schedule, Privacy Policy, and notices of changes to the Agreement or fees; account statements, transaction history, balance information, and activity summaries; error resolution notices, responses to claims or disputes, and provisional credit notices; notices regarding insufficient funds, negative balances, inactivity, card expiration, or account closure; privacy policies, notices, and updates; tax-related information and forms (to the extent legally permitted electronically); and any other notices, alerts, or information we elect to provide electronically.
+
+3. Method of Providing Communications Electronically
+
+Electronic Communications will be provided by one or more of: posting to or through our websites or customer portals (lottery.haploos.com, lotterycards.com, www.haploos.com, or any successor sites); email to the address you have provided; mobile application notifications, push notifications, or in-app messages; text messages (SMS) to your mobile number (standard rates may apply); or any other electronic means permitted by applicable law. Communications are considered received within twenty-four (24) hours of being posted, emailed, texted, or otherwise made available, unless we receive notice that electronic delivery was unsuccessful. You are responsible for regularly checking your email (including spam/junk folders), account portal, and mobile device.
+
+4. How to Update Your Records / Contact Information
+
+It is solely your responsibility to provide and keep current a true, accurate, and complete email address, mobile telephone number, mailing address, and other contact information. You may update your information by logging into your Account portal or by emailing help@haploos.com or help@lotterycards.com. We are not responsible for any failure to receive a Communication if the contact information on file is incorrect, outdated, or incomplete, or if your email provider filters or blocks our messages. Failure to keep your information current may result in you not receiving important notices, which could have adverse consequences for your Account.
+
+5. Hardware and Software Requirements
+
+To access, view, download, print, and retain electronic Communications you must have: a computer, tablet, smartphone, or other internet-capable device; a current, supported web browser supporting at least 256-bit encryption (e.g., the latest Chrome, Firefox, Safari, or Edge); software capable of viewing PDF files (such as Adobe Acrobat Reader or a comparable PDF reader); sufficient electronic storage or printer access to retain copies for your records; an active, valid email address you regularly monitor; and, for mobile app access, a compatible iOS or Android device able to download and run applications from the Apple App Store or Google Play Store and run the most recent version of our mobile application. If these requirements change while you have an active Account and the change creates a material risk you may be unable to access or retain Communications electronically, we will notify you of the revised requirements; continued use after such notice constitutes reaffirmation of consent under the updated requirements. We reserve the right to discontinue support for outdated or insecure software.
+
+6. Requesting Paper Copies
+
+We will not automatically send a paper copy of any Communication unless you request it or we deem it appropriate or required by law. You may obtain a paper copy by printing it yourself or requesting we mail one, generally within ninety (90) days after we first provided the electronic Communication. To request a paper copy, email help@haploos.com or help@lotterycards.com identifying the specific Communication; a fee of $10.00 may be charged per requested paper document, consistent with the Fee Schedule. Requesting a paper copy does not, by itself, withdraw your consent to electronic Communications.
+
+7. Communications in Writing; Retention
+
+All Communications, whether electronic or paper, are considered "in writing." You should print or download and securely store a copy of this E-SIGN Consent and any other important Communication. We may retain electronic records in accordance with our record-retention policies and applicable law; an electronic record has the same legal effect, validity, and enforceability as a paper original.
+
+8. Federal Law; Governing Effect
+
+Your consent to electronic Communications and electronic signatures is provided in connection with a transaction affecting interstate commerce subject to the federal Electronic Signatures in Global and National Commerce Act, 15 U.S.C. § 7001 et seq. (the "E-SIGN Act"). This Consent is governed by the E-SIGN Act and, to the extent not inconsistent, the Agreement and applicable state law (including any applicable Uniform Electronic Transactions Act).
+
+9. Termination or Changes to Electronic Communications
+
+We reserve the right, in our sole discretion, to discontinue providing electronic Communications, to change the terms on which we provide them, or to require certain Communications be provided only in paper form, with notice as required by law. If a change to hardware or software requirements creates a material risk you will be unable to access or retain electronic Communications, we will notify you and, where required, obtain your renewed consent.
+
+10. How to Withdraw Consent; Consequences
+
+You may withdraw consent to electronic Communications at any time by emailing help@haploos.com or help@lotterycards.com (or another withdrawal method we make available in Account settings), including your full name, Account or Card information, and a clear statement that you are withdrawing E-SIGN consent. If you withdraw consent: your Account and all associated Cards will be closed in accordance with the Agreement; you will no longer be able to use the Services, the Card, or the Account; remaining funds will be handled per the Agreement (including any applicable dormancy, escheat, or return procedures); and we will send subsequent required Communications in writing (paper) to your most current mailing address on file. We will not impose any fee solely to process a withdrawal. Withdrawal is effective only after we've had a reasonable time (generally up to ten (10) business days) to process the request; in the meantime you will continue receiving electronic Communications. Withdrawal does not affect the legal validity or enforceability of Communications or electronic signatures delivered/provided prior to withdrawal. Because the Card program and Services are designed and operated exclusively through electronic channels, withdrawal of E-SIGN consent is incompatible with continued use of the Account or Card.
+
+11. Additional Acknowledgments and Limitations of Liability
+
+You acknowledge and agree that: we are not responsible for any delay, failure, or inability to deliver or receive a Communication caused by your equipment, software, internet service provider, email provider (including spam filters, quarantine, or full mailbox), mobile carrier, or other third-party system outside our reasonable control; you are solely responsible for maintaining the security of your email account, Account credentials, and devices, and for promptly reviewing all Communications; an electronic signature (including clicking "I Agree," checking a box, or any other electronic indication of assent) has the same legal effect as a handwritten signature; the English-language version of this E-SIGN Consent and all Communications is official and controlling, and any translation is provided for convenience only; and this E-SIGN Consent does not modify or limit any rights or remedies we may have under the Agreement or applicable law.
+
+12. Contact Us
+
+Email: help@haploos.com or help@lotterycards.com
+Websites: lottery.haploos.com | lotterycards.com | www.haploos.com
+Program Manager: Haploos Inc. and/or LotteryCards.com
+
+By affirmatively consenting to this E-SIGN Consent (including by clicking "I Agree," checking the applicable box, or accepting the Cardholder Agreement), you confirm that you have read, understand, and agree to its terms, that you can access electronic Communications in the formats described above, and that you consent to the use of electronic signatures and electronic records for all Communications related to your Account and Card.
+
+© 2026 Haploos Inc. / LotteryCards.com. All rights reserved.`;
 
   icon(size) {
     const g = React.createElement;
@@ -163,43 +571,28 @@ class Component extends DCLogic {
 
   renderVals() {
     const s = this.state;
-    const q = s.stateQuery.trim().toLowerCase();
-    const filtered = Component.STATES.filter(([code, name]) =>
-      !q || name.toLowerCase().includes(q) || code.toLowerCase() === q);
-    const states = filtered.map(([code, name]) => {
-      const active = s.selected === code;
+    const docs = {
+      cardholder: { label: 'Cardholder Agreement', title: 'Consumer Prepaid Cardholder Agreement', updated: 'July 23, 2026', body: Component.CARDHOLDER },
+      tos: { label: 'Platform Terms of Service', title: 'Platform Terms of Service', updated: 'July 23, 2026', body: Component.TOS },
+      esign: { label: 'E-SIGN Consent', title: 'E-SIGN Consent Agreement', updated: 'July 23, 2026', body: Component.ESIGN },
+    };
+    const tabs = ['cardholder', 'tos', 'esign'].map(key => {
+      const active = s.activeTab === key;
       return {
-        code, name,
-        flagUrl: code === 'DC'
-          ? "data:image/svg+xml," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 100'><rect width='200' height='100' fill='#fff'/><rect y='42' width='200' height='14' fill='#E81B39'/><rect y='64' width='200' height='14' fill='#E81B39'/><g fill='#E81B39'><g transform='translate(60,20)'><path d='M0,-13 L3,-4 L12.4,-4 L4.9,1.5 L7.7,10.5 L0,5 L-7.7,10.5 L-4.9,1.5 L-12.4,-4 L-3,-4 Z'/></g><g transform='translate(100,20)'><path d='M0,-13 L3,-4 L12.4,-4 L4.9,1.5 L7.7,10.5 L0,5 L-7.7,10.5 L-4.9,1.5 L-12.4,-4 L-3,-4 Z'/></g><g transform='translate(140,20)'><path d='M0,-13 L3,-4 L12.4,-4 L4.9,1.5 L7.7,10.5 L0,5 L-7.7,10.5 L-4.9,1.5 L-12.4,-4 L-3,-4 Z'/></g></g></svg>")
-          : (code === 'PR' || code === 'VI')
-            ? 'https://flagcdn.com/w160/' + code.toLowerCase() + '.png'
-            : 'https://flagcdn.com/w160/us-' + code.toLowerCase() + '.png',
+        label: docs[key].label,
+        select: () => this.setState({ activeTab: key }),
         bg: active ? '#0B2545' : '#fff',
-        color: active ? '#fff' : '#0B2545',
-        border: active ? '#0B2545' : '#DDE4EC',
-        pick: () => {
-          this.setState({ selected: code }, () => {
-            const el = document.getElementById('agreement');
-            if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 84, behavior: 'smooth' });
-          });
-        },
+        color: active ? '#fff' : '#4A5A70',
+        border: active ? '#0B2545' : '#D8DFE8',
       };
     });
-    const sel = s.selected;
-    const selEntry = sel ? Component.AGREEMENTS[sel] : null;
-    const selName = sel ? (Component.STATES.find(([c]) => c === sel) || [])[1] : '';
+    const active = docs[s.activeTab];
     return {
       iconNav: this.icon(34), iconFoot: this.icon(30), iconDoc: this.docIcon(),
-      stateQuery: s.stateQuery,
-      setStateQuery: e => this.setState({ stateQuery: e.target.value }),
-      states,
-      noMatches: filtered.length === 0,
-      hasSelection: !!sel,
-      selName,
-      selMeta: selEntry ? ('Effective ' + selEntry.effective) : 'Official agreement pending publication',
-      selBody: selEntry ? selEntry.body :
-        ('The cardholder agreement for the ' + selName + ' lottery program will be published here.\n\nThis document will cover, at minimum:\n\n1. Definitions and parties to the agreement\n2. How your virtual prepaid card is issued and funded\n3. Fees, limits, and expiration\n4. Adding the card to mobile wallets and payment apps\n5. Lost or compromised card procedures\n6. FDIC insurance and Mastercard protections\n7. Dispute resolution and error-reporting timelines\n8. State-specific terms required by the ' + selName + ' lottery\n\nUntil the official agreement is posted, current winners can request a copy from the support crew at 1-800-555-0000.'),
+      tabs,
+      activeTitle: active.title,
+      activeUpdated: active.updated,
+      activeBody: active.body,
       printAgreement: () => window.print(),
     };
   }

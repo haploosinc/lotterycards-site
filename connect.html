@@ -297,7 +297,14 @@ class Component extends DCLogic {
         if (!name || !email || !msg) { this.setState({ formError: 'Please fill in your name, email, and message.' }); return; }
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { this.setState({ formError: 'That email doesn\u2019t look right \u2014 mind double-checking it?' }); return; }
         if (!s.humanChecked) { this.setState({ formError: 'Please tap "I\u2019m human" before sending.' }); return; }
-        // Backend hook: POST { name, email, role, message, turnstileToken } to your email relay or Zendesk ticket API; verify the token server-side.
+        // Wired to a mailto: link for now (no backend yet) - opens the visitor's own email client, addressed
+        // to Haploos, pre-filled with their info. Works without any server, but depends on the visitor having
+        // an email client configured. Production: replace with a POST to a real email relay or ticketing API
+        // (e.g. Zendesk), verifying the Turnstile token server-side, so it doesn't depend on the visitor's setup.
+        const roleLabel = { winner: 'Winner', agency: 'Lottery agency', retail: 'Retailer' }[s.fRole] || s.fRole;
+        const mailSubject = encodeURIComponent(`LotteryCards contact form \u2014 ${roleLabel} \u2014 ${name}`);
+        const mailBody = encodeURIComponent(`From: ${name} <${email}>\nI am a: ${roleLabel}\n\nMessage:\n${msg}`);
+        window.location.href = `mailto:info@haploos.com?subject=${mailSubject}&body=${mailBody}`;
         this.setState({ formSent: true, formError: '', sentName: name, sentEmail: email, fName: '', fEmail: '', fMessage: '', humanChecked: false });
       },
       resetForm: () => this.setState({ formSent: false }),

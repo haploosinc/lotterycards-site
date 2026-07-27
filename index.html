@@ -81,7 +81,7 @@
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
         <sc-if value="{{ agencyView }}" hint-placeholder-val="{{ false }}">
-          <a class="lc-cta lc-nav-login" href="agency-access.html" style="font-size:14px;font-weight:600;color:#fff;padding:9px 17px;border:1px solid rgba(255,255,255,.24);border-radius:10px;">Agency Login</a>
+          <a class="lc-cta lc-nav-login" href="/agency-access/" style="font-size:14px;font-weight:600;color:#fff;padding:9px 17px;border:1px solid rgba(255,255,255,.24);border-radius:10px;">Agency Login</a>
         </sc-if>
         <a class="lc-cta lc-nav-demo" href="{{ navCtaHref }}" style="font-size:14px;font-weight:700;color:#3A2B08;background:#E9C766;padding:10px 19px;border-radius:10px;">{{ navCtaLabel }}</a>
       </div>
@@ -336,7 +336,7 @@
         <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:#DCE6F2;">
           <div>✦&nbsp;&nbsp;Pay winners in seconds</div><div>✦&nbsp;&nbsp;Lower check &amp; mailing costs</div><div>✦&nbsp;&nbsp;Clear audit records</div>
         </div>
-        <a class="lc-link" href="connect.html" style="display:inline-block;margin-top:20px;font-size:14px;font-weight:600;color:#7FC9F0;">Explore →</a>
+        <a class="lc-link" href="/connect/" style="display:inline-block;margin-top:20px;font-size:14px;font-weight:600;color:#7FC9F0;">Explore →</a>
       </div>
       <div class="reveal lc-card" style="background:linear-gradient(180deg,#12294A,#0D2038);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:30px 26px;">
         <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#E9C766;margin-bottom:12px;">For retail partners</div>
@@ -345,7 +345,7 @@
         <div style="display:flex;flex-direction:column;gap:9px;font-size:13.5px;color:#DCE6F2;">
           <div>✦&nbsp;&nbsp;No cash on hand needed</div><div>✦&nbsp;&nbsp;QR claim printed on the receipt</div><div>✦&nbsp;&nbsp;Works with existing systems</div>
         </div>
-        <a class="lc-link" href="connect.html" style="display:inline-block;margin-top:20px;font-size:14px;font-weight:600;color:#7FC9F0;">Explore →</a>
+        <a class="lc-link" href="/connect/" style="display:inline-block;margin-top:20px;font-size:14px;font-weight:600;color:#7FC9F0;">Explore →</a>
       </div>
       <div class="reveal lc-card" style="background:linear-gradient(180deg,#1B2E1F,#132817);border:1px solid rgba(95,211,163,.18);border-radius:18px;padding:30px 26px;">
         <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5FD3A3;margin-bottom:12px;">For winners</div>
@@ -508,8 +508,8 @@
     </div>
     <div style="display:flex;flex-direction:column;gap:10px;font-size:13.5px;">
       <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5C708C;margin-bottom:2px;">Company</div>
-      <a href="connect.html" style="color:#8FA3C2;">Connect</a>
-      <a href="legal.html" style="color:#8FA3C2;">Legal</a>
+      <a href="/connect/" style="color:#8FA3C2;">Connect</a>
+      <a href="/legal/" style="color:#8FA3C2;">Legal</a>
       <a href="{{ footLoginHref }}" style="color:#8FA3C2;">{{ footLoginLabel }}</a>
     </div>
   </div>
@@ -673,9 +673,9 @@ class Component extends DCLogic {
         ? 'Apple, Google & Samsung — plus Venmo, Cash App, PayPal, and any app that accepts a debit card'
         : 'add it to Apple, Google or Samsung Wallet — or link it to Venmo, Cash App & PayPal',
       heroCta: agency ? 'Request a demo' : 'Winner Login',
-      heroCtaHref: agency ? 'connect.html' : 'https://winners.lotterycards.com/login',
+      heroCtaHref: agency ? '/connect/' : 'https://winners.lotterycards.com/login',
       heroCta2: agency ? 'Talk to the crew' : 'How it works',
-      heroCta2Href: agency ? 'connect.html' : '#yourcard',
+      heroCta2Href: agency ? '/connect/' : '#yourcard',
       agencyView: agency, winnerView: !agency,
       menuOpen: this.state.menuOpen,
       toggleMenu: (e) => { e.stopPropagation(); this.setState(s => ({ menuOpen: !s.menuOpen })); },
@@ -684,16 +684,16 @@ class Component extends DCLogic {
       winnerMark: agency ? '' : '✓',
       agencyMark: agency ? '✓' : '',
       navCtaLabel: agency ? 'Request a demo' : 'Winner Login',
-      navCtaHref: agency ? 'connect.html' : 'https://winners.lotterycards.com/login',
+      navCtaHref: agency ? '/connect/' : 'https://winners.lotterycards.com/login',
       footLoginLabel: agency ? 'Agency Login' : 'Winner Login',
-      footLoginHref: agency ? 'agency-access.html' : 'https://winners.lotterycards.com/login',
+      footLoginHref: agency ? '/agency-access/' : 'https://winners.lotterycards.com/login',
       finalEyebrow: agency ? 'Join the conversation' : 'Ready when you win',
       finalTitle: agency ? "People aren't leaving cash. They're leaving friction." : 'Your win shouldn’t have to wait.',
       finalSub: agency
         ? "Washington built the first lift. Tell us how you pay winners today, and we'll show you where LotteryCards fits."
         : 'Log in to see your balance, add your card to your wallet, and spend your winnings anywhere.',
       finalCta2: agency ? 'Agency Login' : 'Support Crew',
-      finalCta2Href: agency ? 'agency-access.html' : 'connect.html',
+      finalCta2Href: agency ? '/agency-access/' : '/connect/',
     };
   }
 }
